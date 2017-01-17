@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TextDrafter</string>
+
+    <!--MAIN ACTIVITY-->
+    <string name="button_prepare">PREPARE DRAFT</string>
+
+    <!--DIALOG-->
+    <string name="dialog_accept">ACCEPT</string>
+    <string name="dialog_cancel">CANCEL</string>
+
+</resources>
