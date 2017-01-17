@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TextDrafter.iml" filepath="$PROJECT_DIR$/TextDrafter.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/textDrafter.iml" filepath="$PROJECT_DIR$/textDrafter.iml" />
     </modules>
   </component>
 </project>
