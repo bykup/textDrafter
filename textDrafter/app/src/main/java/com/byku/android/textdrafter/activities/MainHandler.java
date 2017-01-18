@@ -8,7 +8,14 @@ import com.byku.android.textdrafter.utils.tags.FragmentTags;
 
 public class MainHandler {
 
-    public void onClick(Activity activity, DialogListenerInterface listener, MainModel model){
+    public void onPrepareClick(Activity activity, DialogListenerInterface listener, MainModel model){
+        new DialogSmsInput().setDefaultText(model.getSmsText()).setListener(listener).show(activity.getFragmentManager(), FragmentTags.dialogTag);
+    }
+
+    public void onSendSmsClick(Activity activity, DialogListenerInterface listener, MainModel model){
+
+
+
         new DialogSmsInput().setDefaultText(model.getSmsText()).setListener(listener).show(activity.getFragmentManager(), FragmentTags.dialogTag);
     }
 }

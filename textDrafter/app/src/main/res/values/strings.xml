@@ -3,6 +3,7 @@
 
     <!--MAIN ACTIVITY-->
     <string name="button_prepare">PREPARE DRAFT</string>
+    <string name="button_send">SEND TEXT</string>
 
     <!--DIALOG-->
     <string name="dialog_accept">ACCEPT</string>

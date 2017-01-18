@@ -7,7 +7,6 @@ import java.util.List;
 
 public class TextParser {
 
-    //detects [1] [2] [3] or [2+3]
     public static List<KeyValueModel> textToKeyValue(String smsText){
         UniqueKeyValueList uniqueKeyValueList = new UniqueKeyValueList();
         int beg,end;
