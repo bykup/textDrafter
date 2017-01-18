@@ -26,8 +26,8 @@
 
         <TextView
             android:id="@+id/textview_sms_draft"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="352dp"
+            android:layout_height="149dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
@@ -49,7 +49,7 @@
             app:layout_constraintLeft_toLeftOf="@+id/recyclerview_sms_values"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_sms_draft"
-            android:onClick="@{(view) -> handlers.onClick(mainmodel.activity, listeners.getListener(mainmodel))}"/>
+            android:onClick="@{(view) -> handlers.onClick(mainmodel.activity, listeners.getListener(mainmodel),mainmodel)}"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_sms_values"

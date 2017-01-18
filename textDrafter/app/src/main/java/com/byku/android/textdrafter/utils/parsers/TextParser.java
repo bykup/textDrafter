@@ -15,6 +15,8 @@ public class TextParser {
         beg = smsText.indexOf("[");
         while(beg != -1){
             end = smsText.indexOf("]",beg);
+            if(end == -1)
+                return uniqueKeyValueList.returnList();
             String key = smsText.substring(beg+1,end);
             if(ifValueInput(key))
                 uniqueKeyValueList.add(new KeyValueModel(key,KeyValueModel.INPUT,beg+1,end));
@@ -26,6 +28,8 @@ public class TextParser {
     }
 
     private static boolean ifValueInput(String string){
+        if(string.isEmpty())
+            return false;
         for(char c : string.toCharArray()){
             if(!Character.isDigit(c)) return false;
         }
@@ -34,6 +38,8 @@ public class TextParser {
 
     private static boolean ifValueOutput(String string){
         boolean ifHasMathOperations = false;
+        if(string.isEmpty())
+            return false;
         for(char c : string.toCharArray()){
             if(Character.isLetter(c))
                 return false;

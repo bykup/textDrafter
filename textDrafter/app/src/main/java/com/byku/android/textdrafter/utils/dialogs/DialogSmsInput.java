@@ -11,12 +11,15 @@ import android.view.LayoutInflater;
 
 import com.byku.android.textdrafter.R;
 import com.byku.android.textdrafter.databinding.InputDialogTextBinding;
+import com.byku.android.textdrafter.utils.dialogs.interfaces.DialogListenerInterface;
 
 public class DialogSmsInput extends DialogFragment {
 
     private DialogModel dialogModel;
     private AlertDialog dialog;
-    private DialogListener listener;
+    private DialogListeners dialogListeners;
+    private DialogListenerInterface listener;
+    private String smsText;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,9 +30,11 @@ public class DialogSmsInput extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         InputDialogTextBinding inputDialogTextBinding = DataBindingUtil.inflate(inflater, R.layout.input_dialog_text, null, false);
-        dialogModel = new DialogModel(getActivity());
+        dialogModel = new DialogModel(smsText);
+        dialogListeners = new DialogListeners();
+
         inputDialogTextBinding.setDialogmodel(dialogModel);
-        inputDialogTextBinding.dialogSmstext.addTextChangedListener(dialogModel.getTextWatcher());
+        inputDialogTextBinding.dialogSmstext.addTextChangedListener(dialogListeners.getTextWatcher(dialogModel));
 
         dialog = new AlertDialog.Builder(getActivity())
                 .setView(inputDialogTextBinding.getRoot())
@@ -52,7 +57,12 @@ public class DialogSmsInput extends DialogFragment {
         return dialog;
     }
 
-    public DialogSmsInput setListener(DialogListener listener){
+    public DialogSmsInput setDefaultText(String smsText){
+        this.smsText = smsText;
+        return this;
+    }
+
+    public DialogSmsInput setListener(DialogListenerInterface listener){
         this.listener = listener;
         return this;
     }
