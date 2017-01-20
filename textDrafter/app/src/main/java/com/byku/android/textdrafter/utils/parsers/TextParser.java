@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TextParser {
 
-    public static List<KeyValueModel> textToKeyValue(String smsText){
+    public List<KeyValueModel> textToKeyValue(String smsText){
         UniqueKeyValueList uniqueKeyValueList = new UniqueKeyValueList();
         int beg,end;
 
@@ -18,15 +18,15 @@ public class TextParser {
                 return uniqueKeyValueList.returnList();
             String key = smsText.substring(beg+1,end);
             if(ifValueInput(key))
-                uniqueKeyValueList.add(new KeyValueModel(key,KeyValueModel.INPUT,beg+1,end));
+                uniqueKeyValueList.add(new KeyValueModel(key,KeyValueModel.INPUT));
             else if(ifValueOutput(key))
-                uniqueKeyValueList.add(new KeyValueModel(key,KeyValueModel.OUTPUT,beg+1,end));
+                uniqueKeyValueList.add(new KeyValueModel(key,KeyValueModel.OUTPUT));
             beg = smsText.indexOf("[",end);
         }
         return uniqueKeyValueList.returnList();
     }
 
-    private static boolean ifValueInput(String string){
+    private boolean ifValueInput(String string){
         if(string.isEmpty())
             return false;
         for(char c : string.toCharArray()){
@@ -35,7 +35,7 @@ public class TextParser {
         return true;
     }
 
-    private static boolean ifValueOutput(String string){
+    private boolean ifValueOutput(String string){
         boolean ifHasMathOperations = false;
         if(string.isEmpty())
             return false;
@@ -48,7 +48,7 @@ public class TextParser {
         return ifHasMathOperations;
     }
 
-    private static boolean ifCharMathOperation(char c){
+    private boolean ifCharMathOperation(char c){
         if(c == '+' || c == '-'){
             return true;
         }

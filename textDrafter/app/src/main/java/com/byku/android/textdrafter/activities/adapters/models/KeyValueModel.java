@@ -10,16 +10,10 @@ public class KeyValueModel {
     private String key;
     private char type;
     private String value;
-    private List<Integer> begPositions;
-    private List<Integer> endPositions;
 
-    public KeyValueModel(String key, char type, int begPos, int endPos) {
+    public KeyValueModel(String key, char type) {
         setKey(key);
         setType(type);
-        begPositions = new ArrayList<>();
-        endPositions = new ArrayList<>();
-        begPositions.add(begPos);
-        endPositions.add(endPos);
     }
 
     public String getKey() {
@@ -44,23 +38,5 @@ public class KeyValueModel {
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    public void addNewPos(int begPos, int endPos){
-        begPositions.add(begPos);
-        endPositions.add(endPos);
-    }
-
-    public void addNewPos(List<Integer> begPos, List<Integer> endPos){
-        begPositions.addAll(begPos);
-        endPositions.addAll(endPos);
-    }
-
-    public List<Integer> getBegPositions(){
-        return begPositions;
-    }
-
-    public List<Integer> getEndPositions(){
-        return endPositions;
     }
 }

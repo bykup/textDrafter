@@ -7,8 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.byku.android.textdrafter.activities.adapters.listeners.SmsValuesListeners;
 import com.byku.android.textdrafter.activities.adapters.models.KeyValueModel;
-import com.byku.android.textdrafter.activities.adapters.models.SmsValuesModel;
+import com.byku.android.textdrafter.activities.adapters.models.RecyclerSmsModel;
 import com.byku.android.textdrafter.databinding.RecyclerItemBinding;
 import com.byku.android.textdrafter.utils.parsers.TextParser;
 
@@ -19,6 +20,7 @@ public class SmsValuesAdapter extends RecyclerView.Adapter<SmsValuesAdapter.SmsV
 
     private List<KeyValueModel> inputs;
     private List<KeyValueModel> outputs;
+    private List<RecyclerSmsModel> models;
 
     Context context;
 
@@ -26,12 +28,13 @@ public class SmsValuesAdapter extends RecyclerView.Adapter<SmsValuesAdapter.SmsV
         this.context = context;
         inputs = new ArrayList<KeyValueModel>();
         outputs = new ArrayList<KeyValueModel>();
+        models = new ArrayList<RecyclerSmsModel>();
         if (list != null)
             setInputOutputLists(list);
     }
 
     public SmsValuesAdapter(String smsText, Context context) {
-        this(TextParser.textToKeyValue(smsText), context);
+        this(new TextParser().textToKeyValue(smsText), context);
     }
 
     @Override
@@ -43,20 +46,30 @@ public class SmsValuesAdapter extends RecyclerView.Adapter<SmsValuesAdapter.SmsV
     @Override
     public void onBindViewHolder(SmsValuesHolder holder, int position) {
         KeyValueModel keyValueModel = inputs.get(position);
-        SmsValuesModel model = new SmsValuesModel(keyValueModel.getKey());
+        RecyclerSmsModel model = new RecyclerSmsModel(keyValueModel.getKey());
+        models.add(model);
+        SmsValuesListeners listeners = new SmsValuesListeners();
         holder.getBinding().setSmsvaluesmodel(model);
+        holder.getBinding().edittextVariableValue.addTextChangedListener(listeners.getTextWatcher(model));
     }
 
     @Override
     public int getItemCount() {
-        return inputs.size();
+        if (inputs != null)
+            return inputs.size();
+        else return 0;
     }
 
-    public void setList(List<KeyValueModel> list){
+    public void notifyDataModelChanged(){
+        models.clear();
+        notifyDataSetChanged();
+    }
+
+    public void setList(List<KeyValueModel> list) {
         inputs.clear();
         outputs.clear();
         setInputOutputLists(list);
-        notifyDataSetChanged();
+        notifyDataModelChanged();
     }
 
     private void setInputOutputLists(List<KeyValueModel> list) {
@@ -66,6 +79,10 @@ public class SmsValuesAdapter extends RecyclerView.Adapter<SmsValuesAdapter.SmsV
             else if (keyValueModel.getType() == KeyValueModel.OUTPUT)
                 outputs.add(keyValueModel);
         }
+    }
+
+    public List<RecyclerSmsModel> getModels() {
+        return models;
     }
 
     class SmsValuesHolder extends RecyclerView.ViewHolder {

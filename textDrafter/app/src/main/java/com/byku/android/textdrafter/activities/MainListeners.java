@@ -13,7 +13,7 @@ public class MainListeners {
                 if (smsText != null && smsText.length() > 0 && mainModel.getSmsValuesAdapter() != null) {
                     mainModel.setSmsText(smsText);
                     mainModel.getList().clear();
-                    mainModel.getList().addAll(TextParser.textToKeyValue(smsText));
+                    mainModel.getList().addAll(new TextParser().textToKeyValue(smsText));
                     mainModel.getSmsValuesAdapter().setList(mainModel.getList());
                 }
             }

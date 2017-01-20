@@ -4,16 +4,16 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import com.android.databinding.library.baseAdapters.BR;
 
-public class SmsValuesModel extends BaseObservable {
+public class RecyclerSmsModel extends BaseObservable {
     private String key;
     private String value;
 
-    public SmsValuesModel(String key) {
+    public RecyclerSmsModel(String key) {
         setKey(key);
         setValue("");
     }
 
-    public SmsValuesModel(String key, String value) {
+    public RecyclerSmsModel(String key, String value) {
         setKey(key);
         setValue(value);
     }
@@ -35,6 +35,5 @@ public class SmsValuesModel extends BaseObservable {
 
     public void setValue(String value) {
         this.value = value;
-        notifyPropertyChanged(BR.value);
     }
 }

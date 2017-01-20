@@ -1,13 +1,15 @@
-package com.byku.android.textdrafter.utils.dialogs;
+package com.byku.android.textdrafter.activities.adapters.listeners;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 
-public class DialogListeners {
+import com.byku.android.textdrafter.activities.adapters.models.RecyclerSmsModel;
+
+public class SmsValuesListeners {
     private TextWatcher textWatcher;
 
 
-    public TextWatcher getTextWatcher(final DialogModel model) {
+    public TextWatcher getTextWatcher(final RecyclerSmsModel recyclerSmsModel) {
         if(textWatcher == null)
             textWatcher = new TextWatcher() {
                 @Override
@@ -20,10 +22,11 @@ public class DialogListeners {
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    model.setSmsText(editable.toString());
+                    recyclerSmsModel.setValue(editable.toString());
                 }
             };
 
         return textWatcher;
     }
+
 }

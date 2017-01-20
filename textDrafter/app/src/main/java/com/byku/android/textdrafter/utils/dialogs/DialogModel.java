@@ -6,7 +6,7 @@ import android.databinding.Bindable;
 import com.android.databinding.library.baseAdapters.BR;
 
 public class DialogModel extends BaseObservable {
-    String smsText;
+    private String smsText;
 
     public DialogModel() {
         smsText = null;
@@ -23,6 +23,5 @@ public class DialogModel extends BaseObservable {
 
     public void setSmsText(String smsText) {
         this.smsText = smsText;
-        notifyPropertyChanged(BR.smsText);
     }
 }

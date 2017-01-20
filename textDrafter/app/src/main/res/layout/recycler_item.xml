@@ -7,7 +7,11 @@
 
         <variable
             name="smsvaluesmodel"
-            type="com.byku.android.textdrafter.activities.adapters.models.SmsValuesModel" />
+            type="com.byku.android.textdrafter.activities.adapters.models.RecyclerSmsModel" />
+
+        <variable
+            name="smsvalueslisteners"
+            type="com.byku.android.textdrafter.activities.adapters.listeners.SmsValuesListeners"/>
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

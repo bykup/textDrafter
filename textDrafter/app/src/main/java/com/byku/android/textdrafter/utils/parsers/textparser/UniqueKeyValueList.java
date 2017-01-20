@@ -17,7 +17,6 @@ public class UniqueKeyValueList {
     public void add(KeyValueModel keyValueModel) {
         for (KeyValueModel thisKeyValueModel : list) {
             if (thisKeyValueModel.getKey().equalsIgnoreCase(keyValueModel.getKey())) {
-                thisKeyValueModel.addNewPos(keyValueModel.getBegPositions(), keyValueModel.getBegPositions());
                 return;
             }
         }
