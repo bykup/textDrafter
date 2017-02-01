@@ -85,6 +85,14 @@ public class SmsValuesAdapter extends RecyclerView.Adapter<SmsValuesAdapter.SmsV
         return models;
     }
 
+    public List<KeyValueModel> getInputs() {
+        return inputs;
+    }
+
+    public List<KeyValueModel> getOutputs() {
+        return outputs;
+    }
+
     class SmsValuesHolder extends RecyclerView.ViewHolder {
 
         private RecyclerItemBinding binding;

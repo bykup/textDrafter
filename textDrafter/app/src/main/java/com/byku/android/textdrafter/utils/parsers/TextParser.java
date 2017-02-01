@@ -7,6 +7,9 @@ import java.util.List;
 
 public class TextParser {
 
+    private static boolean ifPrevMathOp = false;
+    private char mathOp[] = {'+','-'};
+
     public List<KeyValueModel> textToKeyValue(String smsText){
         UniqueKeyValueList uniqueKeyValueList = new UniqueKeyValueList();
         int beg,end;
@@ -37,20 +40,29 @@ public class TextParser {
 
     private boolean ifValueOutput(String string){
         boolean ifHasMathOperations = false;
+        if(!Character.isDigit(string.charAt(0)) || !Character.isDigit(string.charAt(string.length()-1)))
+            return false;
         if(string.isEmpty())
             return false;
         for(char c : string.toCharArray()){
             if(Character.isLetter(c))
                 return false;
-            if(ifCharMathOperation(c))
+            if(ifCharMathOperation(c)) {
+                if(ifPrevMathOp)
+                    return false;
+                ifPrevMathOp = true;
                 ifHasMathOperations = true;
+            }else{
+                ifPrevMathOp = false;
+            }
         }
         return ifHasMathOperations;
     }
 
     private boolean ifCharMathOperation(char c){
-        if(c == '+' || c == '-'){
-            return true;
+        for (char m : mathOp){
+            if(c==m)
+                return true;
         }
         return false;
     }
