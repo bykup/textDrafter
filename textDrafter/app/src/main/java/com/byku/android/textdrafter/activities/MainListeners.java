@@ -1,27 +1,27 @@
 package com.byku.android.textdrafter.activities;
 
-import com.byku.android.textdrafter.utils.parsers.TextParser;
-import com.byku.android.textdrafter.utils.dialogs.interfaces.DialogListenerInterface;
-import com.byku.android.textdrafter.utils.dialogs.DialogSmsInput;
+import android.text.Editable;
+import android.text.TextWatcher;
 
 public class MainListeners {
+    private TextWatcher textWatcher;
 
-    public DialogListenerInterface getListener(final MainModel mainModel) {
-        return new DialogListenerInterface() {
-            @Override
-            public void onPositiveClick(DialogSmsInput dialogSmsInput, String smsText) {
-                if (smsText != null && smsText.length() > 0 && mainModel.getSmsValuesAdapter() != null) {
-                    mainModel.setSmsText(smsText);
-                    mainModel.getList().clear();
-                    mainModel.getList().addAll(new TextParser().textToKeyValue(smsText));
-                    mainModel.getSmsValuesAdapter().setList(mainModel.getList());
+    public TextWatcher getTextWatcher(final MainModel model) {
+        if(textWatcher == null)
+            textWatcher = new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 }
-            }
 
-            @Override
-            public void onNegativeClick(DialogSmsInput dialogSmsInpup) {
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
 
-            }
-        };
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    model.setTelText(editable.toString());
+                }
+            };
+        return textWatcher;
     }
 }

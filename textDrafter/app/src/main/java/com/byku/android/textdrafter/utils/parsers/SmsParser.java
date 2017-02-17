@@ -22,14 +22,14 @@ public class SmsParser {
         smsText = mainModel.getSmsText();
     }
 
-    public String parseToSms() throws NullPointerException {
+    public String parseToSms() {
         if (recyclerSmsModels == null || TextUtils.isEmpty(smsText))
-            throw new NullPointerException("Mandarory value null or empty");
+            return "";
 
         for (RecyclerSmsModel recyclerSmsModel : recyclerSmsModels) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("\\[").append(recyclerSmsModel.getKey()).append("\\]");
-            smsText = smsText.replaceAll(stringBuilder.toString(), recyclerSmsModel.getValue());
+            smsText = smsText.replaceAll(stringBuilder.toString(), TextUtils.isEmpty(recyclerSmsModel.getValue()) ? "" : recyclerSmsModel.getValue());
         }
         return prepTextWithCalculations();
     }
@@ -39,7 +39,11 @@ public class SmsParser {
         for (KeyValueModel model : outputModel) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("[").append(model.getKey()).append("]");
-            finalSms = finalSms.replace(stringBuilder.toString(),prepSingleMathOperation(model.getKey()));
+            try {
+                finalSms = finalSms.replace(stringBuilder.toString(), prepSingleMathOperation(model.getKey()));
+            } catch(RuntimeException ex){
+                ex.printStackTrace();
+            }
         }
         return finalSms;
     }
@@ -53,7 +57,7 @@ public class SmsParser {
             while (index > -1) {
                 if ((index - 1 < 0) || !Character.isDigit(text.charAt(index - 1)))
                     noNumberBefore = true;
-                if ((index + model.getKey().length()) < mathOp.length()) {
+                if ((index + model.getKey().length()) < text.length()) {
                     if (!Character.isDigit(text.charAt(index + model.getKey().length()))) {
                         noNumberAfter = true;
                     }

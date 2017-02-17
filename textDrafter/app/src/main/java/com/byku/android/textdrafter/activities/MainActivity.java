@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.byku.android.textdrafter.R;
 import com.byku.android.textdrafter.databinding.ActivityMainBinding;
+import com.byku.android.textdrafter.utils.dialogs.DialogListeners;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,8 +20,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.textview_sms_draft)
     TextView textView;
 
-    private MainModel mainView;
+    private MainModel mainModel;
     private MainHandler mainHandler;
+    private DialogListeners dialogListeners;
     private MainListeners mainListeners;
     private ActivityMainBinding binding;
 
@@ -33,12 +35,25 @@ public class MainActivity extends AppCompatActivity {
     private void initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         ButterKnife.bind(this);
-        mainView = new MainModel(this,recyclerViewSmsValues);
-        mainHandler = new MainHandler();
-        mainListeners = new MainListeners();
+        mainModel();
+        mainHandler();
+        mainListeners();
+    }
 
-        binding.setMainmodel(mainView);
+    private void mainModel() {
+        mainModel = new MainModel(this, recyclerViewSmsValues);
+        binding.setMainmodel(mainModel);
+    }
+
+    private void mainHandler() {
+        mainHandler = new MainHandler();
         binding.setHandlers(mainHandler);
-        binding.setListeners(mainListeners);
+    }
+
+    private void mainListeners() {
+        dialogListeners = new DialogListeners();
+        mainListeners = new MainListeners();
+        binding.setListeners(dialogListeners);
+        binding.edittextTelNumber.addTextChangedListener(mainListeners.getTextWatcher(mainModel));
     }
 }

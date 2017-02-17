@@ -16,7 +16,7 @@
 
         <variable
             name="listeners"
-            type="com.byku.android.textdrafter.activities.MainListeners" />
+            type="com.byku.android.textdrafter.utils.dialogs.DialogListeners" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -27,17 +27,16 @@
 
         <TextView
             android:id="@+id/textview_sms_draft"
-            android:layout_width="352dp"
+            android:layout_width="0dp"
             android:layout_height="149dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="@{mainmodel.smsText}"
             android:textColor="@color/main_text"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintTop_creator="1"
             tools:text="Testowy [1] sms [2]" />
 
         <Button
@@ -46,20 +45,20 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:onClick="@{(view) -> handlers.onPrepareClick(mainmodel.activity, listeners.getListener(mainmodel),mainmodel)}"
+            android:onClick="@{(view) -> handlers.onPrepareClick(mainmodel.activity, listeners.getDialogListener(mainmodel),mainmodel)}"
             android:text="@string/button_prepare"
-            app:layout_constraintLeft_toLeftOf="@+id/recyclerview_sms_values"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_sms_draft" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_sms_values"
             android:layout_width="368dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/edittext_tel_number"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_sms_prepare" />
@@ -71,12 +70,27 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            android:onClick="@{(view) -> handlers.onSendSmsClick(mainmodel.activity, listeners.getListener(mainmodel),mainmodel)}"
+            android:onClick="@{(view) -> handlers.onSendSmsClick(mainmodel.activity, listeners.getDialogListener(mainmodel),mainmodel)}"
             android:text="@string/button_send"
             app:layout_constraintBottom_toTopOf="@+id/recyclerview_sms_values"
             app:layout_constraintLeft_toRightOf="@+id/button_sms_prepare"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_sms_draft"
             app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/edittext_tel_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="phone"
+            android:text="@{mainmodel.telText}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 </layout>

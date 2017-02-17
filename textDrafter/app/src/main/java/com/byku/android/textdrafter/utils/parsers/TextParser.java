@@ -1,5 +1,7 @@
 package com.byku.android.textdrafter.utils.parsers;
 
+import android.text.TextUtils;
+
 import com.byku.android.textdrafter.activities.adapters.models.KeyValueModel;
 import com.byku.android.textdrafter.utils.parsers.textparser.UniqueKeyValueList;
 
@@ -39,6 +41,8 @@ public class TextParser {
     }
 
     private boolean ifValueOutput(String string){
+        if(TextUtils.isEmpty(string))
+            return false;
         boolean ifHasMathOperations = false;
         if(!Character.isDigit(string.charAt(0)) || !Character.isDigit(string.charAt(string.length()-1)))
             return false;
