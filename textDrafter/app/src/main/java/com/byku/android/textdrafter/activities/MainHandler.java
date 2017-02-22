@@ -14,6 +14,6 @@ public class MainHandler {
     }
 
     public void onSendSmsClick(Activity activity, DialogListenerInterface listener, MainModel mainModel) {
-        new DialogSmsInput().setDefaultText(new SmsParser(mainModel).parseToSms()).show(activity.getFragmentManager(), FragmentTags.dialogTag);
+        new DialogSmsInput().setDefaultText(new SmsParser(mainModel).parseToSms()).setListener(listener).show(activity.getFragmentManager(), FragmentTags.dialogTag);
     }
 }

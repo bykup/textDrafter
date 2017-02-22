@@ -70,7 +70,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            android:onClick="@{(view) -> handlers.onSendSmsClick(mainmodel.activity, listeners.getDialogListener(mainmodel),mainmodel)}"
+            android:onClick="@{(view) -> handlers.onSendSmsClick(mainmodel.activity, listeners.getDialogListenerSendText(mainmodel),mainmodel)}"
             android:text="@string/button_send"
             app:layout_constraintBottom_toTopOf="@+id/recyclerview_sms_values"
             app:layout_constraintLeft_toRightOf="@+id/button_sms_prepare"

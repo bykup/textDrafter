@@ -108,6 +108,8 @@ public class SmsTextDbHelper extends SQLiteOpenHelper {
                     cursor.getColumnIndexOrThrow(
                             FeedEntry.COLUMN_NAME_SMSVALUE)));
         }
+        cursor.close();
+
         return builder.toString();
     }
 
@@ -126,6 +128,8 @@ public class SmsTextDbHelper extends SQLiteOpenHelper {
                     cursor.getColumnIndexOrThrow(
                             FeedEntry.COLUMN_NAME_SMSRECIPENT)));
         }
+        cursor.close();
+
         return builder.toString();
     }
 }

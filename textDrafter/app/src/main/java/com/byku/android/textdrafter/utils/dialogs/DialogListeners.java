@@ -1,8 +1,14 @@
 package com.byku.android.textdrafter.utils.dialogs;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
+import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.Toast;
 
+import com.byku.android.textdrafter.R;
 import com.byku.android.textdrafter.activities.MainModel;
 import com.byku.android.textdrafter.database.SmsTextDbHelper;
 import com.byku.android.textdrafter.database.Tables.SmsTextContract;
@@ -44,10 +50,32 @@ public class DialogListeners {
                         mainModel.getList().clear();
                         mainModel.getList().addAll(new TextParser().textToKeyValue(smsText));
                         mainModel.getSmsValuesAdapter().setList(mainModel.getList());
-                        new SmsTextDbHelper(mainModel.getActivity()).writeToDatabase(SmsTextContract.TEMP_KEY, smsText, mainModel.getTelText()).readAllFromDatabase();
+                        new SmsTextDbHelper(mainModel.getActivity()).writeToDatabase(SmsTextContract.TEMP_KEY, smsText, mainModel.getTelText()).close();
                     }
                 }
 
+                @Override
+                public void onNegativeClick(DialogSmsInput dialogSmsInpup) {
+
+                }
+            };
+        return dialogListenerInterface;
+    }
+
+    public DialogListenerInterface getDialogListenerSendText(final MainModel mainModel) {
+        if (dialogListenerInterface == null)
+            dialogListenerInterface = new DialogListenerInterface() {
+                @Override
+                public void onPositiveClick(DialogSmsInput dialogSmsInput, String smsText) {
+                    if (smsText != null && smsText.length() > 0) {
+                        if (ContextCompat.checkSelfPermission(mainModel.getActivity(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+                            SmsManager smsManager = SmsManager.getDefault();
+                            smsManager.sendTextMessage(mainModel.getTelText(), null, smsText, null, null);
+                        } else{
+                            Toast.makeText(mainModel.getActivity(), mainModel.getActivity().getString(R.string.toast_no_sms_send_perm), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
                 @Override
                 public void onNegativeClick(DialogSmsInput dialogSmsInpup) {
 

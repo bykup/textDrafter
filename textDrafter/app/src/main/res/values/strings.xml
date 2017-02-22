@@ -9,4 +9,7 @@
     <string name="dialog_accept">ACCEPT</string>
     <string name="dialog_cancel">CANCEL</string>
 
+    <!--TOAST-->
+    <string name="toast_no_sms_send_perm">NEED PERMISSION TO SEND SMS</string>
+
 </resources>
