@@ -7,6 +7,7 @@ import android.databinding.Bindable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.WindowManager;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.byku.android.textdrafter.activities.adapters.SmsValuesAdapter;
@@ -34,6 +35,7 @@ public class MainModel extends BaseObservable {
         setSmsText(new SmsTextDbHelper(activity).readValueFromDatabase(SmsTextContract.TEMP_KEY));
         setTelText(new SmsTextDbHelper(activity).readRecipentFromDatabase(SmsTextContract.TEMP_KEY));
         initRecyclerView();
+        initViewsBehaviour();
     }
 
     @Bindable
@@ -79,5 +81,9 @@ public class MainModel extends BaseObservable {
         smsValuesAdapter = new SmsValuesAdapter(list, activity);
         recyclerView.setAdapter(smsValuesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+    }
+
+    private void initViewsBehaviour(){
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 }
