@@ -19,7 +19,7 @@ public class SmsParser {
             recyclerSmsModels = mainModel.getSmsValuesAdapter().getModels();
             outputModel = mainModel.getSmsValuesAdapter().getOutputs();
         }
-        smsText = new String(mainModel.getSmsText());
+        smsText = mainModel.getSmsText();
     }
 
     public String parseToSms() {
@@ -32,8 +32,7 @@ public class SmsParser {
             smsText = smsText.replaceAll(stringBuilder.toString(), TextUtils.isEmpty(recyclerSmsModel.getValue()) ? "" : recyclerSmsModel.getValue());
         }
 
-        String finalSms = prepTextWithCalculations(smsText);
-        return finalSms;
+        return prepTextWithCalculations(smsText);
     }
 
     private String prepTextWithCalculations(String smsText) {
