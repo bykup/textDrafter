@@ -1,19 +1,16 @@
 package com.byku.android.textdrafter.activities;
 
-import android.app.Activity;
-
+import com.byku.android.textdrafter.utils.dialogs.DialogHelper;
 import com.byku.android.textdrafter.utils.dialogs.interfaces.DialogListenerInterface;
-import com.byku.android.textdrafter.utils.dialogs.DialogSmsInput;
 import com.byku.android.textdrafter.utils.parsers.SmsParser;
-import com.byku.android.textdrafter.utils.tags.FragmentTags;
 
 public class MainHandler {
 
-    public void onPrepareClick(Activity activity, DialogListenerInterface listener, MainModel model) {
-        new DialogSmsInput().setDefaultText(model.getSmsText()).setListener(listener).show(activity.getFragmentManager(), FragmentTags.dialogTag);
+    public void onPrepareClick(DialogListenerInterface listener, MainModel model) {
+        new DialogHelper().createAcceptCancelEditDialog(model,null).setListener(listener).showDialog();
     }
 
-    public void onSendSmsClick(Activity activity, DialogListenerInterface listener, MainModel mainModel) {
-        new DialogSmsInput().setDefaultText(new SmsParser(mainModel).parseToSms()).setListener(listener).show(activity.getFragmentManager(), FragmentTags.dialogTag);
+    public void onSendSmsClick(DialogListenerInterface listener, MainModel model) {
+        new DialogHelper().createShareSendEditDialog(model,new SmsParser(model).parseToSms()).setListener(listener).showDialog();
     }
 }

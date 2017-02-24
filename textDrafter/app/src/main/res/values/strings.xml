@@ -8,6 +8,7 @@
     <!--DIALOG-->
     <string name="dialog_accept">ACCEPT</string>
     <string name="dialog_cancel">CANCEL</string>
+    <string name="dialog_send">SEND SMS</string>
 
     <!--TOAST-->
     <string name="toast_no_sms_send_perm">NEED PERMISSION TO SEND SMS</string>

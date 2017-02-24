@@ -1,8 +1,8 @@
 package com.byku.android.textdrafter.utils.dialogs.interfaces;
 
-import com.byku.android.textdrafter.utils.dialogs.DialogSmsInput;
+import com.byku.android.textdrafter.utils.dialogs.DialogHelper;
 
 public interface DialogListenerInterface {
-    void onPositiveClick(DialogSmsInput dialogSmsInput, String smsText);
-    void onNegativeClick(DialogSmsInput dialogSmsInput);
+    void onPositiveClick(DialogHelper dialogSmsInput, String smsText);
+    void onNegativeClick(DialogHelper dialogSmsInput);
 }
