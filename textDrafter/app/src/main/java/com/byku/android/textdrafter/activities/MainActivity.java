@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.byku.android.textdrafter.R;
 import com.byku.android.textdrafter.databinding.ActivityMainBinding;
+import com.byku.android.textdrafter.utils.dialogs.DialogHandlers;
 import com.byku.android.textdrafter.utils.dialogs.DialogListeners;
 
 import butterknife.BindView;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private MainModel mainModel;
     private MainHandler mainHandler;
     private DialogListeners dialogListeners;
+    private DialogHandlers dialogHandlers;
     private MainListeners mainListeners;
     private ActivityMainBinding binding;
 
@@ -53,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
     private void mainListeners() {
         dialogListeners = new DialogListeners();
         mainListeners = new MainListeners();
-        binding.setListeners(dialogListeners);
+        dialogHandlers = new DialogHandlers();
+        binding.setDlisteners(dialogListeners);
+        binding.setDhandlers(dialogHandlers);
         binding.edittextTelNumber.addTextChangedListener(mainListeners.getTextWatcher(mainModel));
     }
 }

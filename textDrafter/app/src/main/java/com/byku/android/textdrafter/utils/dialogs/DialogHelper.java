@@ -13,6 +13,7 @@ import com.byku.android.textdrafter.utils.dialogs.interfaces.DialogListenerInter
 public class DialogHelper {
 
     protected AlertDialog dialog;
+    protected DialogHandlers handlers;
     protected DialogModel dialogModel;
     protected DialogListenerInterface listener;
 
@@ -57,41 +58,32 @@ public class DialogHelper {
 
         dialog = new AlertDialog.Builder(mainModel.getActivity())
                 .setView(inputDialogTextBinding.getRoot())
-                .setPositiveButton(R.string.dialog_send, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (listener != null)
-                            listener.onPositiveClick(DialogHelper.this,dialogModel.getSmsText());
-                    }
-                })
-                .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (listener != null)
-                            listener.onNegativeClick(DialogHelper.this);
-                        dialog.dismiss();
-                    }
-                })
+                .setPositiveButton(R.string.dialog_send, handlers.sendText(mainModel,smsText))
+                .setNeutralButton(R.string.dialog_share,handlers.shareText(mainModel,smsText))
+                .setNegativeButton(R.string.dialog_cancel, handlers.cancelDialog())
                 .create();
         return this;
     }
 
     public DialogHelper setListener(DialogListenerInterface listener){
-        if(dialog == null || dialogModel == null)
-            return null;
         this.listener = listener;
         return this;
     }
 
+    public DialogHelper setDialogHandlers(DialogHandlers handlers){
+        this.handlers = handlers;
+        return this;
+    }
+
     public DialogHelper setText(String smsText){
-        if(dialog == null || dialogModel == null)
+        if(dialogModel == null)
             return null;
         dialogModel.setSmsText(smsText);
         return this;
     }
 
     public DialogHelper showDialog(){
-        if(dialog == null || dialogModel == null)
+        if(dialog == null)
             return null;
         dialog.show();
         return this;
