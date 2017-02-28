@@ -21,20 +21,14 @@ import java.util.List;
 
 public class MainModel extends BaseObservable {
 
+    private Activity activity;
     private String smsText;
     private String telText;
 
-    private Activity activity;
-    private RecyclerView recyclerView;
-    private SmsValuesAdapter smsValuesAdapter;
-    private List<KeyValueModel> list;
-
-    public MainModel(Activity activity, RecyclerView recyclerView) {
+    public MainModel(Activity activity) {
         this.activity = activity;
-        this.recyclerView = recyclerView;
         setSmsText(new SmsTextDbHelper(activity).readValueFromDatabase(SmsTextContract.TEMP_KEY));
         setTelText(new SmsTextDbHelper(activity).readRecipentFromDatabase(SmsTextContract.TEMP_KEY));
-        initRecyclerView();
         initViewsBehaviour();
     }
 
@@ -60,27 +54,6 @@ public class MainModel extends BaseObservable {
 
     public Activity getActivity() {
         return activity;
-    }
-
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
-    }
-
-    public SmsValuesAdapter getSmsValuesAdapter() {
-        return smsValuesAdapter;
-    }
-
-    public List<KeyValueModel> getList() {
-        return list;
-    }
-
-    private void initRecyclerView() {
-        list = new ArrayList<>();
-        if(!TextUtils.isEmpty(smsText))
-            list = new TextParser().textToKeyValue(smsText);
-        smsValuesAdapter = new SmsValuesAdapter(list, activity);
-        recyclerView.setAdapter(smsValuesAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
     }
 
     private void initViewsBehaviour(){

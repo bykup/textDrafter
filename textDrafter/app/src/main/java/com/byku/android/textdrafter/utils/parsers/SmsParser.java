@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.byku.android.textdrafter.activities.MainModel;
 import com.byku.android.textdrafter.activities.adapters.models.KeyValueModel;
 import com.byku.android.textdrafter.activities.adapters.models.RecyclerSmsModel;
+import com.byku.android.textdrafter.activities.views.MainRecycler;
 
 import java.util.List;
 
@@ -14,10 +15,10 @@ public class SmsParser {
     private List<KeyValueModel> outputModel;
     private String smsText;
 
-    public SmsParser(MainModel mainModel) {
-        if (mainModel.getSmsValuesAdapter() != null) {
-            recyclerSmsModels = mainModel.getSmsValuesAdapter().getModels();
-            outputModel = mainModel.getSmsValuesAdapter().getOutputs();
+    public SmsParser(MainModel mainModel, MainRecycler mainRecycler) {
+        if (mainRecycler.getSmsValuesAdapter() != null) {
+            recyclerSmsModels = mainRecycler.getSmsValuesAdapter().getModels();
+            outputModel = mainRecycler.getSmsValuesAdapter().getOutputs();
         }
         smsText = mainModel.getSmsText();
     }
@@ -25,23 +26,30 @@ public class SmsParser {
     public String parseToSms() {
         if (recyclerSmsModels == null || TextUtils.isEmpty(smsText))
             return "";
-
         for (RecyclerSmsModel recyclerSmsModel : recyclerSmsModels) {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("\\[").append(recyclerSmsModel.getKey()).append("\\]");
-            smsText = smsText.replaceAll(stringBuilder.toString(), TextUtils.isEmpty(recyclerSmsModel.getValue()) ? "" : recyclerSmsModel.getValue());
+            smsText = replaceAllSlashes(recyclerSmsModel);
         }
-
-        return prepTextWithCalculations(smsText);
+        return getFullTextWithCalculations(smsText);
     }
 
-    private String prepTextWithCalculations(String smsText) {
+    private String replaceAllSlashes(RecyclerSmsModel recyclerSmsModel){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\\[")
+                .append(recyclerSmsModel.getKey())
+                .append("\\]");
+        return smsText.replaceAll(stringBuilder.toString(),
+                TextUtils.isEmpty(recyclerSmsModel.getValue())
+                        ? "" : recyclerSmsModel.getValue());
+    }
+
+    private String getFullTextWithCalculations(String smsText) {
         String finalSms = smsText;
         for (KeyValueModel model : outputModel) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("[").append(model.getKey()).append("]");
             try {
-                finalSms = finalSms.replace(stringBuilder.toString(), prepSingleMathOperation(model.getKey()));
+                finalSms = finalSms.replace(stringBuilder.toString(),
+                        getCalculatedText(getTextForMathOperation(model.getKey())));
             } catch (RuntimeException ex) {
                 ex.printStackTrace();
             }
@@ -49,7 +57,7 @@ public class SmsParser {
         return finalSms;
     }
 
-    private String prepSingleMathOperation(String mathOp) {
+    private String getTextForMathOperation(String mathOp) {
         String text = mathOp;
         for (RecyclerSmsModel model : recyclerSmsModels) {
             int index = text.indexOf(model.getKey());
@@ -68,7 +76,10 @@ public class SmsParser {
                     shouldExit = true;
                 }
                 if (noNumberAfter && noNumberBefore) {
-                    text = new StringBuilder().append(text.substring(0, index)).append(model.getValue()).append(text.substring(index + model.getKey().length())).toString();
+                    text = new StringBuilder()
+                            .append(text.substring(0, index)).append(model.getValue())
+                            .append(text.substring(index + model.getKey().length()))
+                            .toString();
                 }
                 if(shouldExit)
                     break;
@@ -78,7 +89,10 @@ public class SmsParser {
                     index = text.indexOf(model.getKey(), index + 1);
             }
         }
-        String value = String.valueOf(MathParser.eval(text));
-        return value;
+        return text;
+    }
+
+    private String getCalculatedText(String textToCalc){
+        return String.valueOf(String.valueOf(MathParser.eval(textToCalc)));
     }
 }

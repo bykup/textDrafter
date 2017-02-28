@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.byku.android.textdrafter.R;
+import com.byku.android.textdrafter.activities.views.MainRecycler;
 import com.byku.android.textdrafter.databinding.ActivityMainBinding;
 import com.byku.android.textdrafter.utils.dialogs.DialogHandlers;
 import com.byku.android.textdrafter.utils.dialogs.DialogListeners;
@@ -16,17 +17,13 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.recyclerview_sms_values)
-    RecyclerView recyclerViewSmsValues;
-    @BindView(R.id.textview_sms_draft)
-    TextView textView;
-
+    private ActivityMainBinding binding;
     private MainModel mainModel;
     private MainHandler mainHandler;
+    private MainListeners mainListeners;
+    private MainRecycler mainRecycler;
     private DialogListeners dialogListeners;
     private DialogHandlers dialogHandlers;
-    private MainListeners mainListeners;
-    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mainModel() {
-        mainModel = new MainModel(this, recyclerViewSmsValues);
+        mainModel = new MainModel(this);
+        mainRecycler = new MainRecycler(mainModel, binding.recyclerviewSmsValues);
         binding.setMainmodel(mainModel);
+        binding.setMainrecycler(mainRecycler);
     }
 
     private void mainHandler() {

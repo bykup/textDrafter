@@ -21,6 +21,10 @@
         <variable
             name="dlisteners"
             type="com.byku.android.textdrafter.utils.dialogs.DialogListeners" />
+
+        <variable
+            name="mainrecycler"
+            type="com.byku.android.textdrafter.activities.views.MainRecycler" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -58,7 +62,7 @@
                 android:id="@+id/button_sms_prepare"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{(view) -> handlers.onPrepareClick(dlisteners.getDialogListener(mainmodel),mainmodel)}"
+                android:onClick="@{(view) -> handlers.onPrepareClick(dlisteners.getDialogListener(mainmodel,mainrecycler),mainmodel)}"
                 android:text="@string/button_prepare"
                 tools:layout_editor_absoluteY="165dp"
                 tools:layout_editor_absoluteX="8dp"
@@ -68,7 +72,7 @@
                 android:id="@+id/button_sms_sendtext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{(view) -> handlers.onSendSmsClick(dhandlers,mainmodel)}"
+                android:onClick="@{(view) -> handlers.onSendSmsClick(dhandlers,mainmodel,mainrecycler)}"
                 android:text="@string/button_send"
                 tools:layout_editor_absoluteX="200dp"
                 tools:layout_editor_absoluteY="165dp"
