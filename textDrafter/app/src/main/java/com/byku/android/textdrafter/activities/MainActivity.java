@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         mainRecycler = new MainRecycler(mainModel, binding.recyclerviewSmsValues);
         binding.setMainmodel(mainModel);
         binding.setMainrecycler(mainRecycler);
-
+        binding.textviewSmsDraft.addTextChangedListener(mainListeners.getTextWatcherSmsText(mainModel, mainRecycler));
+        binding.edittextTelNumber.addTextChangedListener(mainListeners.getTextWatcherTelText(mainModel));
     }
 
     private void mainHandler() {
@@ -55,6 +56,5 @@ public class MainActivity extends AppCompatActivity {
         dialogHandlers = new DialogHandlers();
         binding.setDlisteners(dialogListeners);
         binding.setDhandlers(dialogHandlers);
-        binding.edittextTelNumber.addTextChangedListener(mainListeners.getTextWatcher(mainModel));
     }
 }

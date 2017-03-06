@@ -3,19 +3,19 @@ package com.byku.android.textdrafter.activities;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import com.byku.android.textdrafter.activities.views.MainRecycler;
 import com.byku.android.textdrafter.databinding.ActivityMainBinding;
+import com.byku.android.textdrafter.utils.parsers.TextParser;
 
 public class MainListeners {
-    private TextWatcher textWatcher;
     private ActivityMainBinding binding;
 
     public MainListeners(ActivityMainBinding binding){
         this.binding = binding;
     }
 
-    public TextWatcher getTextWatcher(final MainModel model) {
-        if(textWatcher == null)
-            textWatcher = new TextWatcher() {
+    public TextWatcher getTextWatcherTelText(final MainModel model) {
+      return new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 }
@@ -29,6 +29,25 @@ public class MainListeners {
                     model.setTelText(editable.toString());
                 }
             };
-        return textWatcher;
+    }
+
+    public TextWatcher getTextWatcherSmsText(final MainModel model, final MainRecycler recycler) {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                model.setSmsText(editable.toString());
+                recycler.getList().clear();
+                recycler.getList().addAll(new TextParser().textToKeyValue(model.getSmsText()));
+                recycler.getSmsValuesAdapter().setList(recycler.getList());
+            }
+        };
     }
 }

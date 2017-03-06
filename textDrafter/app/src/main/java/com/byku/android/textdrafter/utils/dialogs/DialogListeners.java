@@ -39,26 +39,4 @@ public class DialogListeners {
 
         return textWatcher;
     }
-
-    public DialogListenerInterface getDialogListener(final MainModel mainModel, final MainRecycler mainRecycler) {
-        return new DialogListenerInterface() {
-            @Override
-            public void onPositiveClick(DialogHelper dialogSmsInput, String smsText) {
-                if (smsText != null && smsText.length() > 0 && mainRecycler.getSmsValuesAdapter() != null) {
-                    mainModel.setSmsText(smsText);
-                    mainRecycler.getList().clear();
-                    mainRecycler.getList().addAll(new TextParser().textToKeyValue(smsText));
-                    mainRecycler.getSmsValuesAdapter().setList(mainRecycler.getList());
-                    new SmsTextDbHelper(mainModel.getActivity())
-                            .writeToDatabase(SmsTextContract.TEMP_KEY, smsText, mainModel.getTelText())
-                            .close();
-                }
-            }
-
-            @Override
-            public void onNegativeClick(DialogHelper dialogSmsInpup) {
-
-            }
-        };
-    }
 }

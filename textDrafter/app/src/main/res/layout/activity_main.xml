@@ -16,7 +16,7 @@
 
         <variable
             name="dhandlers"
-            type="com.byku.android.textdrafter.utils.dialogs.DialogHandlers"/>
+            type="com.byku.android.textdrafter.utils.dialogs.DialogHandlers" />
 
         <variable
             name="dlisteners"
@@ -33,13 +33,18 @@
         android:layout_height="match_parent"
         tools:activity="com.byku.android.textdrafter.activities.MainActivity">
 
-        <TextView
+        <EditText
             android:id="@+id/textview_sms_draft"
             android:layout_width="0dp"
             android:layout_height="149dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:scrollbars="vertical"
             android:text="@{mainmodel.smsText}"
             android:textColor="@color/main_text"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -48,35 +53,26 @@
             tools:text="Testowy [1] sms [2]" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/textview_sms_draft"
-            android:id="@+id/linearLayout"
             android:layout_marginEnd="16dp"
-            app:layout_constraintRight_toRightOf="parent"
             android:layout_marginStart="16dp"
-            app:layout_constraintLeft_toLeftOf="parent">
-            <Button
-                android:id="@+id/button_sms_prepare"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="@{(view) -> handlers.onPrepareClick(dlisteners.getDialogListener(mainmodel,mainrecycler),mainmodel)}"
-                android:text="@string/button_prepare"
-                tools:layout_editor_absoluteY="165dp"
-                tools:layout_editor_absoluteX="8dp"
-                android:layout_weight="1"/>
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_sms_draft">
 
             <Button
                 android:id="@+id/button_sms_sendtext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:onClick="@{(view) -> handlers.onSendSmsClick(dhandlers,mainmodel,mainrecycler)}"
                 android:text="@string/button_send"
                 tools:layout_editor_absoluteX="200dp"
-                tools:layout_editor_absoluteY="165dp"
-                android:layout_weight="1"/>
+                tools:layout_editor_absoluteY="165dp" />
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
@@ -86,12 +82,11 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toTopOf="@+id/edittext_tel_number"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
 
 
         <EditText
