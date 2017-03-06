@@ -3,8 +3,6 @@ package com.byku.android.textdrafter.activities;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
 
 import com.byku.android.textdrafter.R;
 import com.byku.android.textdrafter.activities.views.MainRecycler;
@@ -12,7 +10,6 @@ import com.byku.android.textdrafter.databinding.ActivityMainBinding;
 import com.byku.android.textdrafter.utils.dialogs.DialogHandlers;
 import com.byku.android.textdrafter.utils.dialogs.DialogListeners;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,14 +33,16 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mainModel();
         mainHandler();
-        mainListeners();
+        dialogListeners();
     }
 
     private void mainModel() {
         mainModel = new MainModel(this);
+        mainListeners = new MainListeners(binding);
         mainRecycler = new MainRecycler(mainModel, binding.recyclerviewSmsValues);
         binding.setMainmodel(mainModel);
         binding.setMainrecycler(mainRecycler);
+
     }
 
     private void mainHandler() {
@@ -51,9 +50,8 @@ public class MainActivity extends AppCompatActivity {
         binding.setHandlers(mainHandler);
     }
 
-    private void mainListeners() {
+    private void dialogListeners() {
         dialogListeners = new DialogListeners();
-        mainListeners = new MainListeners();
         dialogHandlers = new DialogHandlers();
         binding.setDlisteners(dialogListeners);
         binding.setDhandlers(dialogHandlers);

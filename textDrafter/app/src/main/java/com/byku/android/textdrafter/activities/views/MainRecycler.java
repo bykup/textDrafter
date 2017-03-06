@@ -8,7 +8,6 @@ import com.byku.android.textdrafter.activities.MainModel;
 import com.byku.android.textdrafter.activities.adapters.SmsValuesAdapter;
 import com.byku.android.textdrafter.activities.adapters.models.KeyValueModel;
 import com.byku.android.textdrafter.utils.parsers.TextParser;
-
 import java.util.ArrayList;
 import java.util.List;
 

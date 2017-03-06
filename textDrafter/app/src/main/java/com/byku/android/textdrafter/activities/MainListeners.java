@@ -3,8 +3,15 @@ package com.byku.android.textdrafter.activities;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import com.byku.android.textdrafter.databinding.ActivityMainBinding;
+
 public class MainListeners {
     private TextWatcher textWatcher;
+    private ActivityMainBinding binding;
+
+    public MainListeners(ActivityMainBinding binding){
+        this.binding = binding;
+    }
 
     public TextWatcher getTextWatcher(final MainModel model) {
         if(textWatcher == null)
