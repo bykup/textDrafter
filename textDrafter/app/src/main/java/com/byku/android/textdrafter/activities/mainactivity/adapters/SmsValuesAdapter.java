@@ -1,4 +1,4 @@
-package com.byku.android.textdrafter.activities.adapters;
+package com.byku.android.textdrafter.activities.mainactivity.adapters;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.byku.android.textdrafter.activities.adapters.listeners.SmsValuesListeners;
-import com.byku.android.textdrafter.activities.adapters.models.KeyValueModel;
-import com.byku.android.textdrafter.activities.adapters.models.RecyclerSmsModel;
-import com.byku.android.textdrafter.databinding.RecyclerItemBinding;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.listeners.SmsValuesListeners;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.models.KeyValueModel;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.models.RecyclerSmsModel;
+import com.byku.android.textdrafter.databinding.SmsvalueRecyclerItemBinding;
 import com.byku.android.textdrafter.utils.parsers.TextParser;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class SmsValuesAdapter extends RecyclerView.Adapter<SmsValuesAdapter.SmsV
 
     @Override
     public SmsValuesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerItemBinding binding = RecyclerItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        SmsvalueRecyclerItemBinding binding = SmsvalueRecyclerItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new SmsValuesHolder(binding.getRoot());
     }
 
@@ -95,14 +95,14 @@ public class SmsValuesAdapter extends RecyclerView.Adapter<SmsValuesAdapter.SmsV
 
     class SmsValuesHolder extends RecyclerView.ViewHolder {
 
-        private RecyclerItemBinding binding;
+        private SmsvalueRecyclerItemBinding binding;
 
         SmsValuesHolder(View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
         }
 
-        public RecyclerItemBinding getBinding() {
+        public SmsvalueRecyclerItemBinding getBinding() {
             return binding;
         }
     }

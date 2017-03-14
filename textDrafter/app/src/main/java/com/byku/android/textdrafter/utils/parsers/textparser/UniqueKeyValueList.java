@@ -1,7 +1,7 @@
 package com.byku.android.textdrafter.utils.parsers.textparser;
 
 
-import com.byku.android.textdrafter.activities.adapters.models.KeyValueModel;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.models.KeyValueModel;
 
 import java.util.ArrayList;
 import java.util.List;

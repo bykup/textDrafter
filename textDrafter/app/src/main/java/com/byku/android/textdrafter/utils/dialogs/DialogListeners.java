@@ -1,21 +1,7 @@
 package com.byku.android.textdrafter.utils.dialogs;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-
-import com.byku.android.textdrafter.activities.MainModel;
-import com.byku.android.textdrafter.activities.views.MainRecycler;
-import com.byku.android.textdrafter.database.SmsTextDbHelper;
-import com.byku.android.textdrafter.database.Tables.SmsTextContract;
-import com.byku.android.textdrafter.utils.dialogs.interfaces.DialogListenerInterface;
-import com.byku.android.textdrafter.utils.parsers.TextParser;
 
 public class DialogListeners {
     private TextWatcher textWatcher;

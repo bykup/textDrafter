@@ -1,20 +1,23 @@
-package com.byku.android.textdrafter.activities;
+package com.byku.android.textdrafter.activities.mainactivity;
+
 
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.byku.android.textdrafter.R;
-import com.byku.android.textdrafter.activities.views.MainRecycler;
-import com.byku.android.textdrafter.databinding.ActivityMainBinding;
+import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
+import com.byku.android.textdrafter.databinding.FragmentMainBinding;
 import com.byku.android.textdrafter.utils.dialogs.DialogHandlers;
 import com.byku.android.textdrafter.utils.dialogs.DialogListeners;
 
-import butterknife.ButterKnife;
+public class MainActivityFragment extends Fragment {
 
-public class MainActivity extends AppCompatActivity {
-
-    private ActivityMainBinding binding;
+    private FragmentMainBinding binding;
     private MainModel mainModel;
     private MainHandler mainHandler;
     private MainListeners mainListeners;
@@ -22,22 +25,28 @@ public class MainActivity extends AppCompatActivity {
     private DialogListeners dialogListeners;
     private DialogHandlers dialogHandlers;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_main,container,false);
         initBinding();
+        return binding.getRoot();
     }
 
     private void initBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        ButterKnife.bind(this);
         mainModel();
         mainHandler();
         dialogListeners();
     }
 
     private void mainModel() {
-        mainModel = new MainModel(this);
+        mainModel = new MainModel(getActivity());
         mainListeners = new MainListeners(binding);
         mainRecycler = new MainRecycler(mainModel, binding.recyclerviewSmsValues);
         binding.setMainmodel(mainModel);
@@ -57,4 +66,5 @@ public class MainActivity extends AppCompatActivity {
         binding.setDlisteners(dialogListeners);
         binding.setDhandlers(dialogHandlers);
     }
+
 }

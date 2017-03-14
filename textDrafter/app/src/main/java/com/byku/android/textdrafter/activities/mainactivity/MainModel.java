@@ -1,23 +1,14 @@
-package com.byku.android.textdrafter.activities;
+package com.byku.android.textdrafter.activities.mainactivity;
 
 
 import android.app.Activity;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.android.databinding.library.baseAdapters.BR;
-import com.byku.android.textdrafter.activities.adapters.SmsValuesAdapter;
-import com.byku.android.textdrafter.activities.adapters.models.KeyValueModel;
-import com.byku.android.textdrafter.database.SmsTextDbHelper;
+import com.byku.android.textdrafter.database.SmsTextDbHelperImpl;
 import com.byku.android.textdrafter.database.Tables.SmsTextContract;
-import com.byku.android.textdrafter.utils.parsers.TextParser;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainModel extends BaseObservable {
 
@@ -27,8 +18,8 @@ public class MainModel extends BaseObservable {
 
     public MainModel(Activity activity) {
         this.activity = activity;
-        setSmsText(new SmsTextDbHelper(activity).readValueFromDatabase(SmsTextContract.TEMP_KEY));
-        setTelText(new SmsTextDbHelper(activity).readRecipentFromDatabase(SmsTextContract.TEMP_KEY));
+        setSmsText(new SmsTextDbHelperImpl(activity).readValueFromDatabase(SmsTextContract.TEMP_KEY));
+        setTelText(new SmsTextDbHelperImpl(activity).readRecipentFromDatabase(SmsTextContract.TEMP_KEY));
         initViewsBehaviour();
     }
 

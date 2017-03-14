@@ -1,12 +1,12 @@
-package com.byku.android.textdrafter.activities.views;
+package com.byku.android.textdrafter.activities.mainactivity.views;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 
-import com.byku.android.textdrafter.activities.MainModel;
-import com.byku.android.textdrafter.activities.adapters.SmsValuesAdapter;
-import com.byku.android.textdrafter.activities.adapters.models.KeyValueModel;
+import com.byku.android.textdrafter.activities.mainactivity.MainModel;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsValuesAdapter;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.models.KeyValueModel;
 import com.byku.android.textdrafter.utils.parsers.TextParser;
 import java.util.ArrayList;
 import java.util.List;

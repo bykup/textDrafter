@@ -1,4 +1,4 @@
-package com.byku.android.textdrafter.activities.adapters.models;
+package com.byku.android.textdrafter.activities.mainactivity.adapters.models;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;

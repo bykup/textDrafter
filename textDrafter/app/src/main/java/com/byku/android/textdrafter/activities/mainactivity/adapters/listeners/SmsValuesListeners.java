@@ -1,9 +1,9 @@
-package com.byku.android.textdrafter.activities.adapters.listeners;
+package com.byku.android.textdrafter.activities.mainactivity.adapters.listeners;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import com.byku.android.textdrafter.activities.adapters.models.RecyclerSmsModel;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.models.RecyclerSmsModel;
 
 public class SmsValuesListeners {
     private TextWatcher textWatcher;

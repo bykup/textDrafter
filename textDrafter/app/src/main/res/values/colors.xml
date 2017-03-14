@@ -6,4 +6,8 @@
 
     <!--MainActivity-->
     <color name="main_text">#000000</color>
+
+    <!--smskey_recycler_item-->
+    <color name="smskey_recycler_button">#BBBBBB</color>
+
 </resources>

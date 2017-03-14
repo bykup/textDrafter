@@ -6,7 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 
 import com.byku.android.textdrafter.R;
-import com.byku.android.textdrafter.activities.MainModel;
+import com.byku.android.textdrafter.activities.mainactivity.MainModel;
 import com.byku.android.textdrafter.databinding.InputDialogTextBinding;
 import com.byku.android.textdrafter.utils.dialogs.interfaces.DialogListenerInterface;
 

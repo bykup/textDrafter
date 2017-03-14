@@ -11,5 +11,8 @@
     <dimen name="main_activity_text_small">16sp</dimen>
     <dimen name="main_activity_text_normal">20sp</dimen>
     <dimen name="main_activity_text_big">24sp</dimen>
+    <!--smskey_recycler_item-->
+    <dimen name="smskey_recycler_item_padding_normal">20sp</dimen>
+    <dimen name="smskey_recycler_item_padding_small">10sp</dimen>
 
 </resources>

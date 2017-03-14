@@ -2,10 +2,10 @@ package com.byku.android.textdrafter.utils.parsers;
 
 import android.text.TextUtils;
 
-import com.byku.android.textdrafter.activities.MainModel;
-import com.byku.android.textdrafter.activities.adapters.models.KeyValueModel;
-import com.byku.android.textdrafter.activities.adapters.models.RecyclerSmsModel;
-import com.byku.android.textdrafter.activities.views.MainRecycler;
+import com.byku.android.textdrafter.activities.mainactivity.MainModel;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.models.KeyValueModel;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.models.RecyclerSmsModel;
+import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
 
 import java.util.List;
 

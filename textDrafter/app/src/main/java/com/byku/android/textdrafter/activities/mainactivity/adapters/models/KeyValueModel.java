@@ -1,7 +1,4 @@
-package com.byku.android.textdrafter.activities.adapters.models;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.byku.android.textdrafter.activities.mainactivity.adapters.models;
 
 public class KeyValueModel {
     public static char INPUT = 'I';

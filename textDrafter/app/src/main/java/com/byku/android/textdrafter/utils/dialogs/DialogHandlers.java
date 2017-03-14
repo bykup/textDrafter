@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.byku.android.textdrafter.R;
-import com.byku.android.textdrafter.activities.MainModel;
+import com.byku.android.textdrafter.activities.mainactivity.MainModel;
 
 public class DialogHandlers {
 
@@ -48,7 +48,7 @@ public class DialogHandlers {
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT,smsText);
                 sendIntent.setType("text/plain");
-                mainModel.getActivity().startActivity(sendIntent);
+                mainModel.getActivity().startActivity(Intent.createChooser(sendIntent,mainModel.getActivity().getResources().getText(R.string.sharing_send_to)));
             }
         };
     }

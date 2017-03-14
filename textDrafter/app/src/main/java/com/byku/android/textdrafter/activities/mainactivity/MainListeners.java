@@ -1,16 +1,17 @@
-package com.byku.android.textdrafter.activities;
+package com.byku.android.textdrafter.activities.mainactivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import com.byku.android.textdrafter.activities.views.MainRecycler;
+import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
 import com.byku.android.textdrafter.databinding.ActivityMainBinding;
+import com.byku.android.textdrafter.databinding.FragmentMainBinding;
 import com.byku.android.textdrafter.utils.parsers.TextParser;
 
 public class MainListeners {
-    private ActivityMainBinding binding;
+    private FragmentMainBinding binding;
 
-    public MainListeners(ActivityMainBinding binding){
+    public MainListeners(FragmentMainBinding binding){
         this.binding = binding;
     }
 

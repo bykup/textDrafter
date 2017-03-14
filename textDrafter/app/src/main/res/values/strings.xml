@@ -14,4 +14,7 @@
     <!--TOAST-->
     <string name="toast_no_sms_send_perm">NEED PERMISSION TO SEND SMS</string>
 
+    <!--SHARING-->
+    <string name="sharing_send_to">Send to</string>
+
 </resources>
