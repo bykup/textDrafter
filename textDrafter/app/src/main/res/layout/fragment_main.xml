@@ -8,19 +8,11 @@
 
         <variable
             name="mainmodel"
-            type="com.byku.android.textdrafter.activities.mainactivity.MainModel" />
+            type="com.byku.android.textdrafter.activities.mainactivity.MainFragmentModel" />
 
         <variable
             name="handlers"
-            type="com.byku.android.textdrafter.activities.mainactivity.MainHandler" />
-
-        <variable
-            name="dhandlers"
-            type="com.byku.android.textdrafter.utils.dialogs.DialogHandlers" />
-
-        <variable
-            name="dlisteners"
-            type="com.byku.android.textdrafter.utils.dialogs.DialogListeners" />
+            type="com.byku.android.textdrafter.activities.mainactivity.MainFragmentHandler" />
 
         <variable
             name="mainrecycler"
@@ -69,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="@{(view) -> handlers.onSendSmsClick(dhandlers,mainmodel,mainrecycler)}"
+                android:onClick="@{(view) -> handlers.onSendSmsClick(mainmodel,mainrecycler)}"
                 android:text="@string/button_send"
                 tools:layout_editor_absoluteX="200dp"
                 tools:layout_editor_absoluteY="165dp" />

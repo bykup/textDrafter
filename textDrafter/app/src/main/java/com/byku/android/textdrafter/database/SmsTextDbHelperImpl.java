@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 
-import com.byku.android.textdrafter.activities.mainactivity.MainModel;
+import com.byku.android.textdrafter.activities.mainactivity.MainFragmentModel;
 import com.byku.android.textdrafter.database.Tables.SmsTextContract;
 import com.byku.android.textdrafter.database.Tables.SmsTextContract.FeedEntry;
 
@@ -68,17 +68,17 @@ public class SmsTextDbHelperImpl extends SQLiteOpenHelper implements SmsTextDbHe
     }
 
     @Override
-    public SmsTextDbHelperImpl writeToDatabase(String smsKey, MainModel mainModel) {
+    public SmsTextDbHelperImpl writeToDatabase(String smsKey, MainFragmentModel mainFragmentModel) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(
                 FeedEntry.COLUMN_NAME_SMSKEY,
                 smsKey);
         contentValues.put(
                 FeedEntry.COLUMN_NAME_SMSVALUE,
-                mainModel.getSmsText());
+                mainFragmentModel.getSmsText());
         contentValues.put(
                 FeedEntry.COLUMN_NAME_SMSRECIPENT,
-                mainModel.getTelText());
+                mainFragmentModel.getTelText());
         this.getWritableDatabase().insert(
                 FeedEntry.TABLE_NAME,
                 null,

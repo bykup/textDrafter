@@ -30,16 +30,21 @@ public class SmsValuesAdapter extends RecyclerView.Adapter<SmsValuesAdapter.SmsV
         outputs = new ArrayList<KeyValueModel>();
         models = new ArrayList<RecyclerSmsModel>();
         if (list != null)
-            setInputOutputLists(list);
+            setInputOutputLists(
+                    list);
     }
 
     public SmsValuesAdapter(String smsText, Context context) {
-        this(new TextParser().textToKeyValue(smsText), context);
+        this(new TextParser().textToKeyValue(smsText),
+                context);
     }
 
     @Override
     public SmsValuesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        SmsvalueRecyclerItemBinding binding = SmsvalueRecyclerItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        SmsvalueRecyclerItemBinding binding = SmsvalueRecyclerItemBinding.inflate(
+                LayoutInflater.from(parent.getContext()),
+                parent,
+                false);
         return new SmsValuesHolder(binding.getRoot());
     }
 

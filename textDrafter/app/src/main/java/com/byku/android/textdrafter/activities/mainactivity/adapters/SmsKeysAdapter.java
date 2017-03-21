@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.byku.android.textdrafter.activities.mainactivity.MainView;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.listeners.SmsKeysHandlers;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.listeners.SmsKeysHandlersImpl;
 import com.byku.android.textdrafter.databinding.SmskeyRecyclerItemBinding;
 
 import java.util.List;
@@ -15,10 +18,12 @@ public class SmsKeysAdapter extends RecyclerView.Adapter<SmsKeysAdapter.SmsKeysH
 
     Context context;
     List<String> smsKeys;
+    MainView mainView;
 
-    public SmsKeysAdapter(List<String> list, Context context) {
+    public SmsKeysAdapter(List<String> list, Context context, MainView mainView) {
         this.context = context;
         this.smsKeys = list;
+        this.mainView = mainView;
     }
 
     @Override
@@ -29,7 +34,8 @@ public class SmsKeysAdapter extends RecyclerView.Adapter<SmsKeysAdapter.SmsKeysH
 
     @Override
     public void onBindViewHolder(SmsKeysHolder holder, int position) {
-        holder.getBinding().smskey.setText(smsKeys.get(0));
+        holder.getBinding().smskey.setText(smsKeys.get(position));
+        holder.getBinding().smskey.setOnClickListener(new SmsKeysHandlersImpl(mainView, position).getOnClickListener());
     }
 
     @Override
@@ -38,7 +44,6 @@ public class SmsKeysAdapter extends RecyclerView.Adapter<SmsKeysAdapter.SmsKeysH
     }
 
     class SmsKeysHolder extends RecyclerView.ViewHolder {
-
         private SmskeyRecyclerItemBinding binding;
 
         SmsKeysHolder(View itemView) {

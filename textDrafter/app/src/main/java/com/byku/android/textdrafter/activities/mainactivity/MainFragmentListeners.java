@@ -4,18 +4,17 @@ import android.text.Editable;
 import android.text.TextWatcher;
 
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
-import com.byku.android.textdrafter.databinding.ActivityMainBinding;
 import com.byku.android.textdrafter.databinding.FragmentMainBinding;
 import com.byku.android.textdrafter.utils.parsers.TextParser;
 
-public class MainListeners {
+public class MainFragmentListeners {
     private FragmentMainBinding binding;
 
-    public MainListeners(FragmentMainBinding binding){
+    public MainFragmentListeners(FragmentMainBinding binding){
         this.binding = binding;
     }
 
-    public TextWatcher getTextWatcherTelText(final MainModel model) {
+    public TextWatcher getTextWatcherTelText(final MainFragmentModel model) {
       return new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -32,7 +31,7 @@ public class MainListeners {
             };
     }
 
-    public TextWatcher getTextWatcherSmsText(final MainModel model, final MainRecycler recycler) {
+    public TextWatcher getTextWatcherSmsText(final MainFragmentModel model, final MainRecycler recycler) {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

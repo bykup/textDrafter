@@ -10,13 +10,13 @@ import com.android.databinding.library.baseAdapters.BR;
 import com.byku.android.textdrafter.database.SmsTextDbHelperImpl;
 import com.byku.android.textdrafter.database.Tables.SmsTextContract;
 
-public class MainModel extends BaseObservable {
+public class MainFragmentModel extends BaseObservable {
 
     private Activity activity;
     private String smsText;
     private String telText;
 
-    public MainModel(Activity activity) {
+    public MainFragmentModel(Activity activity) {
         this.activity = activity;
         setSmsText(new SmsTextDbHelperImpl(activity).readValueFromDatabase(SmsTextContract.TEMP_KEY));
         setTelText(new SmsTextDbHelperImpl(activity).readRecipentFromDatabase(SmsTextContract.TEMP_KEY));

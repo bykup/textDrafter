@@ -3,21 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="mainview"
+            type="com.byku.android.textdrafter.activities.mainactivity.MainView" />
+
+        <variable
+            name="handlers"
+            type="com.byku.android.textdrafter.activities.mainactivity.MainHandler" />
+
+        <variable
+            name="dhandlers"
+            type="com.byku.android.textdrafter.utils.dialogs.DialogHandlers"/>
+
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_sms_list"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_sms_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:orientation="horizontal" />
+
+            <ImageButton
+                android:id="@+id/imagebutton_new_smskey"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/smskey_recycler_button"
+                android:onClick="@{(view) -> handlers.onNewSmsKeyClick(mainview)}"
+                android:src="@drawable/ic_note_add_black_24dp" />
+        </LinearLayout>
+
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </layout>
