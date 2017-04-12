@@ -6,7 +6,9 @@ import com.byku.android.textdrafter.activities.mainactivity.MainView;
 
 public interface SmsKeysHandlers {
 
+    SmsKeysHandlers setCurrentPosition(int position);
+
     View.OnClickListener getOnClickListener();
 
-    SmsKeysHandlers setCurrentPosition(int position);
+    View.OnLongClickListener getOnLongClickListener(String smsKey);
 }

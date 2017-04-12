@@ -8,5 +8,7 @@ public interface MainView {
 
     void refreshViews();
 
-    void setPage(int pageNumber);
+    void setPagerPage(int pageNumber);
+
+    void setRecyclerPage(int pageNumber);
 }

@@ -44,7 +44,7 @@ public class DialogHandlers {
         };
     }
 
-    public DialogInterface.OnClickListener saveKeyValue(final MainView mainFragmentModel, final DialogModel dialogModel) {
+    public DialogInterface.OnClickListener saveNewKey(final MainView mainFragmentModel, final DialogModel dialogModel) {
         return new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {

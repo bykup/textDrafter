@@ -11,7 +11,7 @@ public class MainFragmentHandler {
 
     public void onSendSmsClick(MainFragmentModel model, MainRecycler mainRecycler) {
         new SmsTextDbHelperImpl(model.getActivity())
-                .writeToDatabase(SmsTextContract.TEMP_KEY, model.getSmsText(), model.getTelText())
+                .writeToDatabase(model.getSmsKey(), model.getSmsText(), model.getTelText())
                 .close();
         new DialogHelper().createShareSendEditDialog(model,new SmsParser(model,mainRecycler).parseToSms()).showDialog();
     }

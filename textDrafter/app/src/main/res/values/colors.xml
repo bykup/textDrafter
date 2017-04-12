@@ -9,5 +9,6 @@
 
     <!--smskey_recycler_item-->
     <color name="smskey_recycler_button">#BBBBBB</color>
+    <color name="smskey_recycler_current_button">#AAA999</color>
 
 </resources>

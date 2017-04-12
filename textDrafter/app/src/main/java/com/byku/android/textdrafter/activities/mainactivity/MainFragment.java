@@ -11,11 +11,14 @@ import android.view.ViewGroup;
 
 import com.byku.android.textdrafter.R;
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
+import com.byku.android.textdrafter.database.SmsTextDbHelper;
+import com.byku.android.textdrafter.database.SmsTextDbHelperImpl;
 import com.byku.android.textdrafter.databinding.FragmentMainBinding;
 import com.byku.android.textdrafter.utils.dialogs.DialogHandlers;
 import com.byku.android.textdrafter.utils.dialogs.DialogListeners;
+import com.byku.android.textdrafter.utils.nullobjectpattern.BundleNullSafeguard;
 
-public class MainActivityFragment extends Fragment {
+public class MainFragment extends Fragment {
 
     private FragmentMainBinding binding;
     private MainFragmentModel mainFragmentModel;
@@ -24,6 +27,7 @@ public class MainActivityFragment extends Fragment {
     private MainRecycler mainRecycler;
     private DialogListeners dialogListeners;
     private DialogHandlers dialogHandlers;
+    private SmsTextDbHelper dbHelper;
 
 
     @Override
@@ -36,19 +40,25 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(
-                inflater,R.layout.fragment_main,
-                container,false);
-        initBinding();
+                inflater, R.layout.fragment_main,
+                container, false);
+        initDb();
+        initViews();
         return binding.getRoot();
     }
 
-    private void initBinding() {
-        mainModel();
+    private void initDb(){
+        dbHelper = new SmsTextDbHelperImpl(getActivity());
+    }
+
+    private void initViews() {
+        initMainModel();
+        initMainModelVariables();
         mainHandler();
         dialogListeners();
     }
 
-    private void mainModel() {
+    private void initMainModel() {
         mainFragmentModel = new MainFragmentModel(
                 getActivity());
         mainFragmentListeners = new MainFragmentListeners(
@@ -69,10 +79,19 @@ public class MainActivityFragment extends Fragment {
                         mainFragmentModel));
     }
 
+    private void initMainModelVariables() {
+        BundleNullSafeguard bundle = new BundleNullSafeguard(
+                getArguments(),
+                getActivity());
+        mainFragmentModel.setSmsKey(
+                bundle.getString(MainActivityConstants.SMS_KEYS));
+        mainFragmentModel.setSmsText(dbHelper.readValueFromDatabase(mainFragmentModel.getSmsKey()));
+        mainFragmentModel.setTelText(dbHelper.readRecipentFromDatabase(mainFragmentModel.getSmsKey()));
+    }
+
     private void mainHandler() {
         mainFragmentHandler = new MainFragmentHandler();
-        binding.setHandlers(
-                mainFragmentHandler);
+        binding.setHandlers(mainFragmentHandler);
     }
 
     private void dialogListeners() {

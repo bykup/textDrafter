@@ -1,10 +1,12 @@
 package com.byku.android.textdrafter.activities.mainactivity.adapters;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.byku.android.textdrafter.activities.mainactivity.MainActivityFragment;
+import com.byku.android.textdrafter.activities.mainactivity.MainActivityConstants;
+import com.byku.android.textdrafter.activities.mainactivity.MainFragment;
 
 import java.util.List;
 
@@ -23,7 +25,11 @@ public class MainViewPager extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new MainActivityFragment();
+        MainFragment mainFragment = new MainFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(MainActivityConstants.SMS_KEYS,smsTypes.get(position));
+        mainFragment.setArguments(bundle);
+        return mainFragment;
     }
 
     @Override

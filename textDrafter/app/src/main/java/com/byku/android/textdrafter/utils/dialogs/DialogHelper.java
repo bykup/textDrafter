@@ -1,17 +1,14 @@
 package com.byku.android.textdrafter.utils.dialogs;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.text.InputType;
 import android.view.LayoutInflater;
-import android.widget.EditText;
 
 import com.byku.android.textdrafter.R;
 import com.byku.android.textdrafter.activities.mainactivity.MainFragmentModel;
 import com.byku.android.textdrafter.activities.mainactivity.MainView;
 import com.byku.android.textdrafter.databinding.InputDialogTextBinding;
-import com.byku.android.textdrafter.utils.dialogs.interfaces.DialogListenerInterface;
 
 public class DialogHelper {
 
@@ -44,7 +41,7 @@ public class DialogHelper {
         return this;
     }
 
-    public DialogHelper createSaveKeyValueEditDialog(MainView mainView) {
+    public DialogHelper createAddKeyValueEditDialog(MainView mainView) {
         LayoutInflater inflater = mainView.getActivity().getLayoutInflater();
         InputDialogTextBinding inputDialogTextBinding = DataBindingUtil.inflate(inflater, R.layout.input_dialog_text, null, false);
         inputDialogTextBinding.dialogSmstext.setInputType(InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE);
@@ -54,7 +51,7 @@ public class DialogHelper {
 
         dialog = new AlertDialog.Builder(mainView.getActivity())
                 .setView(inputDialogTextBinding.getRoot())
-                .setPositiveButton(R.string.dialog_accept, handlers.saveKeyValue(mainView, dialogModel))
+                .setPositiveButton(R.string.dialog_accept, handlers.saveNewKey(mainView, dialogModel))
                 .setNegativeButton(R.string.dialog_cancel, handlers.cancelDialog())
                 .create();
         return this;

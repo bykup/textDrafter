@@ -13,6 +13,7 @@ import com.byku.android.textdrafter.database.Tables.SmsTextContract.FeedEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class SmsTextDbHelperImpl extends SQLiteOpenHelper implements SmsTextDbHelper {
 
@@ -146,4 +147,11 @@ public class SmsTextDbHelperImpl extends SQLiteOpenHelper implements SmsTextDbHe
         }
         return allKeys;
     }
+
+    @Override
+    public void removeFromDatabase(String smsKey)throws NoSuchElementException{
+        this.getWritableDatabase().execSQL("delete from " + FeedEntry.TABLE_NAME + " where " + FeedEntry.COLUMN_NAME_SMSKEY + " = '" + smsKey + "'");
+    }
+
+
 }

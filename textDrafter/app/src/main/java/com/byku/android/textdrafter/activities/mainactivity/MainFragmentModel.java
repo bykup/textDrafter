@@ -13,6 +13,7 @@ import com.byku.android.textdrafter.database.Tables.SmsTextContract;
 public class MainFragmentModel extends BaseObservable {
 
     private Activity activity;
+    private String smsKey;
     private String smsText;
     private String telText;
 
@@ -41,6 +42,14 @@ public class MainFragmentModel extends BaseObservable {
     public void setTelText(String telText) {
         this.telText = telText;
         notifyPropertyChanged(BR.telText);
+    }
+
+    public String getSmsKey() {
+        return smsKey;
+    }
+
+    public void setSmsKey(String smsKey) {
+        this.smsKey = smsKey;
     }
 
     public Activity getActivity() {

@@ -1,8 +1,10 @@
 package com.byku.android.textdrafter.activities.mainactivity;
 
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapter;
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
 import com.byku.android.textdrafter.databinding.FragmentMainBinding;
 import com.byku.android.textdrafter.utils.parsers.TextParser;

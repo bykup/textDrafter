@@ -4,6 +4,7 @@
     <!--MAIN ACTIVITY-->
     <string name="button_prepare">PREPARE DRAFT</string>
     <string name="button_send">SEND TEXT</string>
+    <string name="common_first_draft">Draft</string>
 
     <!--DIALOG-->
     <string name="dialog_accept">ACCEPT</string>

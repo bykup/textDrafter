@@ -4,8 +4,9 @@ package com.byku.android.textdrafter.database;
 import com.byku.android.textdrafter.activities.mainactivity.MainFragmentModel;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
-interface SmsTextDbHelper {
+public interface SmsTextDbHelper {
 
     SmsTextDbHelper writeToDatabase(String smsKey, String smsText, String smsRecipent);
 
@@ -16,5 +17,7 @@ interface SmsTextDbHelper {
     String readRecipentFromDatabase(String key);
 
     List<String> readAllKeysFromDb();
+
+    void removeFromDatabase(String smsKey)throws NoSuchElementException;
 
 }
