@@ -3,6 +3,7 @@ package com.byku.android.textdrafter.activities.mainactivity;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 
 import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapter;
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
@@ -49,6 +50,15 @@ public class MainFragmentListeners {
                 recycler.getList().clear();
                 recycler.getList().addAll(new TextParser().textToKeyValue(model.getSmsText()));
                 recycler.getSmsValuesAdapter().setList(recycler.getList());
+            }
+        };
+    }
+
+    public View.OnFocusChangeListener getEditTelTextOnFocusChangeListener(){
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                System.out.println("Focus change: " + b);
             }
         };
     }

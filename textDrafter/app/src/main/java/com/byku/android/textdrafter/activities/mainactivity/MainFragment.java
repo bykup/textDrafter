@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.byku.android.textdrafter.R;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.models.ContactModel;
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
 import com.byku.android.textdrafter.database.SmsTextDbHelper;
 import com.byku.android.textdrafter.database.SmsTextDbHelperImpl;
@@ -18,7 +19,9 @@ import com.byku.android.textdrafter.utils.dialogs.DialogHandlers;
 import com.byku.android.textdrafter.utils.dialogs.DialogListeners;
 import com.byku.android.textdrafter.utils.nullobjectpattern.BundleNullSafeguard;
 
-public class MainFragment extends Fragment {
+import java.util.List;
+
+public class MainFragment extends Fragment implements FragmentView{
 
     private FragmentMainBinding binding;
     private MainFragmentModel mainFragmentModel;
@@ -45,6 +48,11 @@ public class MainFragment extends Fragment {
         initDb();
         initViews();
         return binding.getRoot();
+    }
+
+    @Override
+    public void onContatsListReady(List<ContactModel> models) {
+
     }
 
     private void initDb(){
@@ -77,6 +85,7 @@ public class MainFragment extends Fragment {
         binding.edittextTelNumber.addTextChangedListener(
                 mainFragmentListeners.getTextWatcherTelText(
                         mainFragmentModel));
+        binding.edittextTelNumber.setOnFocusChangeListener(mainFragmentListeners.getEditTelTextOnFocusChangeListener());
     }
 
     private void initMainModelVariables() {
