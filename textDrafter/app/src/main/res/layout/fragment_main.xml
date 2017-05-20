@@ -8,11 +8,11 @@
 
         <variable
             name="mainmodel"
-            type="com.byku.android.textdrafter.activities.mainactivity.MainFragmentModel" />
+            type="com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentModel" />
 
         <variable
             name="handlers"
-            type="com.byku.android.textdrafter.activities.mainactivity.MainFragmentHandler" />
+            type="com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentHandler" />
 
         <variable
             name="mainrecycler"
@@ -23,7 +23,7 @@
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:activity="com.byku.android.textdrafter.activities.mainactivity.MainActivity">
+        tools:activity="com.byku.android.textdrafter.activities.mainactivity.activity.MainActivity">
 
         <EditText
             android:id="@+id/textview_sms_draft"

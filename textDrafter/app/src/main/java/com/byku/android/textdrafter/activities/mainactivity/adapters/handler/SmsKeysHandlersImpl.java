@@ -1,8 +1,8 @@
-package com.byku.android.textdrafter.activities.mainactivity.adapters.listeners;
+package com.byku.android.textdrafter.activities.mainactivity.adapters.handler;
 
 import android.view.View;
 
-import com.byku.android.textdrafter.activities.mainactivity.MainView;
+import com.byku.android.textdrafter.activities.mainactivity.activity.MainView;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapter;
 import com.byku.android.textdrafter.database.SmsTextDbHelper;
 

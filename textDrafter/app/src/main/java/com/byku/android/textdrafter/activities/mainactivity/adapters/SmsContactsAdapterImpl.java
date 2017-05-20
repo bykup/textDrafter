@@ -5,41 +5,59 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.byku.android.textdrafter.databinding.SmsvalueRecyclerItemBinding;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.handler.ContactHandlers;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.models.ContactModel;
+import com.byku.android.textdrafter.activities.mainactivity.fragment.FragmentView;
+import com.byku.android.textdrafter.databinding.ContactlistRecyclerItemBinding;
 
 import java.util.List;
 
-public class SmsContactsAdapterImpl extends RecyclerView.Adapter<SmsValuesAdapter.SmsValuesHolder> {
+public class SmsContactsAdapterImpl extends RecyclerView.Adapter<SmsContactsAdapterImpl.ContactsHolder> implements SmsContactsAdapter{
 
-    public SmsContactsAdapterImpl() {
+    private List<ContactModel> models;
+    private FragmentView fragmentView;
+
+    public SmsContactsAdapterImpl(List<ContactModel> models, FragmentView fragmentView) {
+        this.models = models;
+        this.fragmentView = fragmentView;
     }
 
     @Override
-    public void onBindViewHolder(SmsValuesAdapter.SmsValuesHolder holder, int position) {
-
+    public void onBindViewHolder(SmsContactsAdapterImpl.ContactsHolder holder, int position) {
+        holder.getBinding().contactName.setText(models.get(position).contactName);
+        holder.getBinding().contactName.setText(models.get(position).contactName);
+        holder.getBinding().contactLayout.setOnClickListener(
+                ContactHandlers.getOnContactClick(
+                        models.get(position),
+                        fragmentView));
     }
 
     @Override
-    public SmsValuesAdapter.SmsValuesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SmsContactsAdapterImpl.ContactsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return models.size();
     }
 
-//    TODO change to proper binding - create proper view
-    class SmsValuesHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void setContactModelsList(List<ContactModel> models){
+        this.models = models;
+        notifyDataSetChanged();
+    }
 
-        private SmsvalueRecyclerItemBinding binding;
+    class ContactsHolder extends RecyclerView.ViewHolder {
 
-        SmsValuesHolder(View itemView) {
+        private ContactlistRecyclerItemBinding binding;
+
+        ContactsHolder(View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
         }
 
-        public SmsvalueRecyclerItemBinding getBinding() {
+        public ContactlistRecyclerItemBinding getBinding() {
             return binding;
         }
     }

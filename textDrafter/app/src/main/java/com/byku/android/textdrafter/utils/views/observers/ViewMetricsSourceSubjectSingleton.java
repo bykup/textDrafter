@@ -3,21 +3,21 @@ package com.byku.android.textdrafter.utils.views.observers;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ViewMetricsSourceSubject {
+public class ViewMetricsSourceSubjectSingleton {
 
-    private static ViewMetricsSourceSubject subject;
+    private static ViewMetricsSourceSubjectSingleton subject;
 
     private Set<ViewMetricsSourceObserver> observersSet;
     private ViewDimensions viewDimensions;
 
-    private ViewMetricsSourceSubject(){
+    private ViewMetricsSourceSubjectSingleton(){
         observersSet = new HashSet<ViewMetricsSourceObserver>();
         viewDimensions = new ViewDimensions(0,0);
     };
 
-    public static ViewMetricsSourceSubject getInstance(){
+    public static ViewMetricsSourceSubjectSingleton getInstance(){
         if(subject == null){
-            subject = new ViewMetricsSourceSubject();
+            subject = new ViewMetricsSourceSubjectSingleton();
         }
         return subject;
     }

@@ -4,37 +4,39 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.util.SparseArray;
-
-import java.util.List;
 
 import com.byku.android.textdrafter.R;
-import com.byku.android.textdrafter.activities.mainactivity.MainView;
-import com.byku.android.textdrafter.activities.mainactivity.adapters.listeners.SmsKeysHandlersImpl;
-import com.byku.android.textdrafter.database.SmsTextDbHelperImpl;
+import com.byku.android.textdrafter.activities.TextDrafterApp;
+import com.byku.android.textdrafter.activities.mainactivity.activity.MainView;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.handler.SmsKeysHandlersImpl;
+import com.byku.android.textdrafter.database.SmsTextDbHelper;
 import com.byku.android.textdrafter.databinding.SmskeyRecyclerItemBinding;
 import com.byku.android.textdrafter.utils.views.observers.ViewDimensions;
 import com.byku.android.textdrafter.utils.views.observers.ViewMetricsSourceObserver;
-import com.byku.android.textdrafter.utils.views.observers.ViewMetricsSourceSubject;
+import com.byku.android.textdrafter.utils.views.observers.ViewMetricsSourceSubjectSingleton;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 public class SmsKeysAdapterImpl extends RecyclerView.Adapter<SmsKeysAdapterImpl.SmsKeysHolder> implements SmsKeysAdapter, ViewMetricsSourceObserver {
 
-    private Context context;
+    @Inject ViewMetricsSourceSubjectSingleton viewMetricsSourceSubjectSingleton;
+    @Inject SmsTextDbHelper smsTextDbHelper;
+
     private List<String> smsKeys;
     private MainView mainView;
-    private SmsTextDbHelperImpl smsTextDbHelper;
     private SparseArray<SmskeyRecyclerItemBinding> bindings;
 
-    public SmsKeysAdapterImpl(SmsTextDbHelperImpl smsTextDbHelper, Context context, MainView mainView) {
-        this.context = context;
-        this.smsKeys = smsTextDbHelper.readAllKeysFromDb();
+    public SmsKeysAdapterImpl(MainView mainView) {
         this.mainView = mainView;
-        this.smsTextDbHelper = smsTextDbHelper;
+        initInjection();
         this.bindings = new SparseArray<>();
-        ViewMetricsSourceSubject.getInstance().attach(this);
+        this.smsKeys = smsTextDbHelper.readAllKeysFromDb();
     }
 
     @Override
@@ -58,13 +60,14 @@ public class SmsKeysAdapterImpl extends RecyclerView.Adapter<SmsKeysAdapterImpl.
 
     @Override
     public void update(ViewDimensions viewDimensions) {
-        for (int i = 0; i < bindings.size(); i++) {
+        int bindingSize = bindings.size();
+        for (int i = 0; i < bindingSize; i++) {
             ViewGroup.LayoutParams layoutParams = bindings.get(i).smskeyLayout.getLayoutParams();
             layoutParams.width = viewDimensions.width/(smsKeys.size() > 3 ? 3 : smsKeys.size());
             layoutParams.height = viewDimensions.height;
             bindings.get(i).smskeyLayout.setLayoutParams(layoutParams);
         }
-        ViewMetricsSourceSubject.getInstance().detach(this);
+        viewMetricsSourceSubjectSingleton.detach(this);
     }
 
     @Override
@@ -79,7 +82,8 @@ public class SmsKeysAdapterImpl extends RecyclerView.Adapter<SmsKeysAdapterImpl.
         if(position >= bindings.size())
             return;
 
-        for(int i = 0; i < bindings.size() ; i++){
+        int bindingSize = bindings.size();
+        for(int i = 0; i < bindingSize; i++){
             if(i != position)
                 bindings.get(i).smskeyLayout.setBackground(ContextCompat.getDrawable(mainView.getActivity(),R.drawable.rectangle_for_buttons));
         }
@@ -96,17 +100,21 @@ public class SmsKeysAdapterImpl extends RecyclerView.Adapter<SmsKeysAdapterImpl.
     }
 
     private void initDimensions(SmsKeysHolder holder) {
-        ViewMetricsSourceSubject sourceSubject = ViewMetricsSourceSubject.getInstance();
-        if(sourceSubject.areDimensionsReady()) {
-            finalInitDimensions(sourceSubject,holder);
+        if(viewMetricsSourceSubjectSingleton.areDimensionsReady()) {
+            finalInitDimensions(viewMetricsSourceSubjectSingleton,holder);
         }
     }
 
-    private void finalInitDimensions(ViewMetricsSourceSubject sourceSubject, SmsKeysHolder holder){
+    private void finalInitDimensions(ViewMetricsSourceSubjectSingleton sourceSubject, SmsKeysHolder holder){
         ViewGroup.LayoutParams layoutParams = holder.getBinding().smskeyLayout.getLayoutParams();
         layoutParams.width = sourceSubject.getViewDimensions().width/(smsKeys.size() > 3 ? 3 : smsKeys.size());
         layoutParams.height = sourceSubject.getViewDimensions().height;
         holder.getBinding().smskeyLayout.setLayoutParams(layoutParams);
+    }
+
+    private void initInjection(){
+        ((TextDrafterApp) mainView.getActivity().getApplication()).getSingletonComponent().inject(this);
+        viewMetricsSourceSubjectSingleton.attach(this);
     }
 
     class SmsKeysHolder extends RecyclerView.ViewHolder {
@@ -120,9 +128,5 @@ public class SmsKeysAdapterImpl extends RecyclerView.Adapter<SmsKeysAdapterImpl.
         public SmskeyRecyclerItemBinding getBinding() {
             return binding;
         }
-    }
-
-    private void colorCurrentItem(int position){
-
     }
 }

@@ -1,4 +1,4 @@
-package com.byku.android.textdrafter.activities.mainactivity;
+package com.byku.android.textdrafter.activities.mainactivity.fragment;
 
 
 import android.app.Activity;

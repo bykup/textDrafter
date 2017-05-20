@@ -1,4 +1,4 @@
-package com.byku.android.textdrafter.activities.mainactivity;
+package com.byku.android.textdrafter.activities.mainactivity.activity;
 
 import android.app.Activity;
 

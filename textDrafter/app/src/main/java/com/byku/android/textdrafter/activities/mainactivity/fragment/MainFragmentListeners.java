@@ -1,21 +1,13 @@
-package com.byku.android.textdrafter.activities.mainactivity;
+package com.byku.android.textdrafter.activities.mainactivity.fragment;
 
-import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 
-import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapter;
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
-import com.byku.android.textdrafter.databinding.FragmentMainBinding;
 import com.byku.android.textdrafter.utils.parsers.TextParser;
 
 public class MainFragmentListeners {
-    private FragmentMainBinding binding;
-
-    public MainFragmentListeners(FragmentMainBinding binding){
-        this.binding = binding;
-    }
 
     public TextWatcher getTextWatcherTelText(final MainFragmentModel model) {
       return new TextWatcher() {
@@ -49,7 +41,7 @@ public class MainFragmentListeners {
                 model.setSmsText(editable.toString());
                 recycler.getList().clear();
                 recycler.getList().addAll(new TextParser().textToKeyValue(model.getSmsText()));
-                recycler.getSmsValuesAdapter().setList(recycler.getList());
+                recycler.getSmsValuesAdapterImpl().setList(recycler.getList());
             }
         };
     }

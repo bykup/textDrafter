@@ -2,9 +2,9 @@ package com.byku.android.textdrafter.utils.parsers;
 
 import android.text.TextUtils;
 
-import com.byku.android.textdrafter.activities.mainactivity.MainFragmentModel;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.models.KeyValueModel;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.models.RecyclerSmsModel;
+import com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentModel;
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
 
 import java.util.List;
@@ -16,9 +16,9 @@ public class SmsParser {
     private String smsText;
 
     public SmsParser(MainFragmentModel mainFragmentModel, MainRecycler mainRecycler) {
-        if (mainRecycler.getSmsValuesAdapter() != null) {
-            recyclerSmsModels = mainRecycler.getSmsValuesAdapter().getModels();
-            outputModel = mainRecycler.getSmsValuesAdapter().getOutputs();
+        if (mainRecycler.getSmsValuesAdapterImpl() != null) {
+            recyclerSmsModels = mainRecycler.getSmsValuesAdapterImpl().getModels();
+            outputModel = mainRecycler.getSmsValuesAdapterImpl().getOutputs();
         }
         smsText = mainFragmentModel.getSmsText();
     }

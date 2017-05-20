@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 
-import com.byku.android.textdrafter.activities.mainactivity.MainFragmentModel;
+import com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentModel;
 import com.byku.android.textdrafter.database.Tables.SmsTextContract;
 import com.byku.android.textdrafter.database.Tables.SmsTextContract.FeedEntry;
 
@@ -137,11 +137,11 @@ public class SmsTextDbHelperImpl extends SQLiteOpenHelper implements SmsTextDbHe
                 projectionKeys,
                 null, null, null, null, null
         );
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             allKeys.add(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_SMSKEY)));
         }
         cursor.close();
-        if(allKeys.isEmpty()) {
+        if (allKeys.isEmpty()) {
             writeToDatabase(SmsTextContract.TEMP_KEY, "", "");
             return readAllKeysFromDb();
         }
@@ -149,7 +149,7 @@ public class SmsTextDbHelperImpl extends SQLiteOpenHelper implements SmsTextDbHe
     }
 
     @Override
-    public void removeFromDatabase(String smsKey)throws NoSuchElementException{
+    public void removeFromDatabase(String smsKey) throws NoSuchElementException {
         this.getWritableDatabase().execSQL("delete from " + FeedEntry.TABLE_NAME + " where " + FeedEntry.COLUMN_NAME_SMSKEY + " = '" + smsKey + "'");
     }
 

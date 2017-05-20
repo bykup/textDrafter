@@ -1,4 +1,4 @@
-package com.byku.android.textdrafter.activities.mainactivity;
+package com.byku.android.textdrafter.activities.mainactivity.fragment;
 
 
 import android.databinding.DataBindingUtil;
@@ -8,8 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.byku.android.textdrafter.R;
+import com.byku.android.textdrafter.activities.mainactivity.activity.MainActivityConstants;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.models.ContactModel;
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
 import com.byku.android.textdrafter.database.SmsTextDbHelper;
@@ -18,6 +20,7 @@ import com.byku.android.textdrafter.databinding.FragmentMainBinding;
 import com.byku.android.textdrafter.utils.dialogs.DialogHandlers;
 import com.byku.android.textdrafter.utils.dialogs.DialogListeners;
 import com.byku.android.textdrafter.utils.nullobjectpattern.BundleNullSafeguard;
+import com.byku.android.textdrafter.utils.parsers.ContactTelParserImpl;
 
 import java.util.List;
 
@@ -55,6 +58,12 @@ public class MainFragment extends Fragment implements FragmentView{
 
     }
 
+    @Override
+    public void setCurrentContact(ContactModel model) {
+        EditText exitText = binding.edittextTelNumber;
+        exitText.setText(new ContactTelParserImpl(exitText).append(model.contactNumber).getOperationResult());
+    }
+
     private void initDb(){
         dbHelper = new SmsTextDbHelperImpl(getActivity());
     }
@@ -69,8 +78,7 @@ public class MainFragment extends Fragment implements FragmentView{
     private void initMainModel() {
         mainFragmentModel = new MainFragmentModel(
                 getActivity());
-        mainFragmentListeners = new MainFragmentListeners(
-                binding);
+        mainFragmentListeners = new MainFragmentListeners();
         mainRecycler = new MainRecycler(
                 mainFragmentModel,
                 binding.recyclerviewSmsValues);
@@ -107,5 +115,4 @@ public class MainFragment extends Fragment implements FragmentView{
         dialogListeners = new DialogListeners();
         dialogHandlers = new DialogHandlers();
     }
-
 }

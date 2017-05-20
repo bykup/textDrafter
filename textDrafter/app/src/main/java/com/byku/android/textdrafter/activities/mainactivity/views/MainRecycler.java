@@ -4,10 +4,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 
-import com.byku.android.textdrafter.activities.mainactivity.MainFragmentModel;
-import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsValuesAdapter;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsValuesAdapterImpl;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.models.KeyValueModel;
+import com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentModel;
 import com.byku.android.textdrafter.utils.parsers.TextParser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class MainRecycler {
 
     private MainFragmentModel mainFragmentModel;
     private RecyclerView recyclerView;
-    private SmsValuesAdapter smsValuesAdapter;
+    private SmsValuesAdapterImpl smsValuesAdapterImpl;
     private List<KeyValueModel> list;
 
     public MainRecycler(MainFragmentModel mainFragmentModel, RecyclerView recyclerView) {
@@ -29,13 +30,13 @@ public class MainRecycler {
         if (!TextUtils.isEmpty(mainFragmentModel.getSmsText())) {
             list = new TextParser().textToKeyValue(mainFragmentModel.getSmsText());
         }
-        smsValuesAdapter = new SmsValuesAdapter(list, mainFragmentModel.getActivity());
-        recyclerView.setAdapter(smsValuesAdapter);
+        smsValuesAdapterImpl = new SmsValuesAdapterImpl(list, mainFragmentModel.getActivity());
+        recyclerView.setAdapter(smsValuesAdapterImpl);
         recyclerView.setLayoutManager(new LinearLayoutManager(mainFragmentModel.getActivity()));
     }
 
-    public SmsValuesAdapter getSmsValuesAdapter() {
-        return smsValuesAdapter;
+    public SmsValuesAdapterImpl getSmsValuesAdapterImpl() {
+        return smsValuesAdapterImpl;
     }
 
     public List<KeyValueModel> getList() {

@@ -5,20 +5,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.byku.android.textdrafter.activities.mainactivity.MainActivityConstants;
-import com.byku.android.textdrafter.activities.mainactivity.MainFragment;
+import com.byku.android.textdrafter.activities.mainactivity.activity.MainActivityConstants;
+import com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragment;
 
 import java.util.List;
 
-public class MainViewPager extends FragmentStatePagerAdapter {
+public class MainViewPagerImpl extends FragmentStatePagerAdapter {
 
     List<String> smsTypes;
 
-    public MainViewPager(FragmentManager fm) {
+    public MainViewPagerImpl(FragmentManager fm) {
         super(fm);
     }
 
-    public MainViewPager(FragmentManager fm,List<String> smsTypes) {
+    public MainViewPagerImpl(FragmentManager fm, List<String> smsTypes) {
         super(fm);
         this.smsTypes = smsTypes;
     }

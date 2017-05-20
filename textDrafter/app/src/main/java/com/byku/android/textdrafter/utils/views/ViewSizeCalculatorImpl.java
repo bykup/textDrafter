@@ -1,7 +1,5 @@
 package com.byku.android.textdrafter.utils.views;
 
-import android.graphics.Point;
-import android.view.Display;
 import android.view.ViewTreeObserver;
 
 import com.byku.android.textdrafter.utils.views.observers.ViewDimensions;

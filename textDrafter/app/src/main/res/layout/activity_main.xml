@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <variable
             name="mainview"
-            type="com.byku.android.textdrafter.activities.mainactivity.MainView" />
+            type="com.byku.android.textdrafter.activities.mainactivity.activity.MainView" />
 
         <variable
             name="handlers"
-            type="com.byku.android.textdrafter.activities.mainactivity.MainHandler" />
+            type="com.byku.android.textdrafter.activities.mainactivity.activity.MainHandler" />
 
         <variable
             name="dhandlers"

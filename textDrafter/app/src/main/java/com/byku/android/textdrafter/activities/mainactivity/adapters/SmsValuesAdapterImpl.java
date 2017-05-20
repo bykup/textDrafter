@@ -16,7 +16,7 @@ import com.byku.android.textdrafter.utils.parsers.TextParser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmsValuesAdapter extends RecyclerView.Adapter<SmsValuesAdapter.SmsValuesHolder> {
+public class SmsValuesAdapterImpl extends RecyclerView.Adapter<SmsValuesAdapterImpl.SmsValuesHolder> {
 
     private List<KeyValueModel> inputs;
     private List<KeyValueModel> outputs;
@@ -24,7 +24,7 @@ public class SmsValuesAdapter extends RecyclerView.Adapter<SmsValuesAdapter.SmsV
 
     Context context;
 
-    public SmsValuesAdapter(List<KeyValueModel> list, Context context) {
+    public SmsValuesAdapterImpl(List<KeyValueModel> list, Context context) {
         this.context = context;
         inputs = new ArrayList<KeyValueModel>();
         outputs = new ArrayList<KeyValueModel>();
@@ -34,7 +34,7 @@ public class SmsValuesAdapter extends RecyclerView.Adapter<SmsValuesAdapter.SmsV
                     list);
     }
 
-    public SmsValuesAdapter(String smsText, Context context) {
+    public SmsValuesAdapterImpl(String smsText, Context context) {
         this(new TextParser().textToKeyValue(smsText),
                 context);
     }

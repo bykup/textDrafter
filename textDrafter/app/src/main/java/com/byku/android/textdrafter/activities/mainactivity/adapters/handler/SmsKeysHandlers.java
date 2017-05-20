@@ -1,8 +1,6 @@
-package com.byku.android.textdrafter.activities.mainactivity.adapters.listeners;
+package com.byku.android.textdrafter.activities.mainactivity.adapters.handler;
 
 import android.view.View;
-
-import com.byku.android.textdrafter.activities.mainactivity.MainView;
 
 public interface SmsKeysHandlers {
 

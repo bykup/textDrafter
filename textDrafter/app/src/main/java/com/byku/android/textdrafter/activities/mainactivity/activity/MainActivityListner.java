@@ -1,13 +1,10 @@
-package com.byku.android.textdrafter.activities.mainactivity;
+package com.byku.android.textdrafter.activities.mainactivity.activity;
 
 import android.support.v4.view.ViewPager;
 
-import com.byku.android.textdrafter.activities.mainactivity.MainFragmentModel;
-import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapter;
-
 public class MainActivityListner {
 
-    public ViewPager.OnPageChangeListener getOnPageChangeListener(final MainView mainView){
+    public static ViewPager.OnPageChangeListener getOnPageChangeListener(final MainView mainView){
         return new ViewPager.OnPageChangeListener(){
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

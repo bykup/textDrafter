@@ -1,9 +1,7 @@
-package com.byku.android.textdrafter.activities.mainactivity;
+package com.byku.android.textdrafter.activities.mainactivity.fragment;
 
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
 import com.byku.android.textdrafter.database.SmsTextDbHelperImpl;
-import com.byku.android.textdrafter.database.Tables.SmsTextContract;
-import com.byku.android.textdrafter.utils.dialogs.DialogHandlers;
 import com.byku.android.textdrafter.utils.dialogs.DialogHelper;
 import com.byku.android.textdrafter.utils.parsers.SmsParser;
 

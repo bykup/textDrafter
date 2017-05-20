@@ -6,13 +6,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.text.TextUtilsCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.byku.android.textdrafter.R;
-import com.byku.android.textdrafter.activities.mainactivity.MainFragmentModel;
-import com.byku.android.textdrafter.activities.mainactivity.MainView;
+import com.byku.android.textdrafter.activities.mainactivity.activity.MainView;
+import com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentModel;
 import com.byku.android.textdrafter.database.SmsTextDbHelperImpl;
 
 public class DialogHandlers {

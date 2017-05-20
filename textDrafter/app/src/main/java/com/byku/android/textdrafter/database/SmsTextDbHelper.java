@@ -1,7 +1,7 @@
 package com.byku.android.textdrafter.database;
 
 
-import com.byku.android.textdrafter.activities.mainactivity.MainFragmentModel;
+import com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentModel;
 
 import java.util.List;
 import java.util.NoSuchElementException;

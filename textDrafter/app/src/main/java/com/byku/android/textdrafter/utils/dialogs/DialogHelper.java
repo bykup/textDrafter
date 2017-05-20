@@ -6,8 +6,8 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 
 import com.byku.android.textdrafter.R;
-import com.byku.android.textdrafter.activities.mainactivity.MainFragmentModel;
-import com.byku.android.textdrafter.activities.mainactivity.MainView;
+import com.byku.android.textdrafter.activities.mainactivity.activity.MainView;
+import com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentModel;
 import com.byku.android.textdrafter.databinding.InputDialogTextBinding;
 
 public class DialogHelper {

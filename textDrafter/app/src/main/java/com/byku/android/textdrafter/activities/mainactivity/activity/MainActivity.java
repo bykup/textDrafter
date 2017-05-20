@@ -1,4 +1,4 @@
-package com.byku.android.textdrafter.activities.mainactivity;
+package com.byku.android.textdrafter.activities.mainactivity.activity;
 
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
@@ -8,20 +8,25 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.byku.android.textdrafter.R;
-import com.byku.android.textdrafter.activities.mainactivity.adapters.MainViewPager;
+import com.byku.android.textdrafter.activities.TextDrafterApp;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.MainViewPagerImpl;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapter;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapterImpl;
-import com.byku.android.textdrafter.database.SmsTextDbHelperImpl;
+import com.byku.android.textdrafter.database.SmsTextDbHelper;
 import com.byku.android.textdrafter.databinding.ActivityMainBinding;
 import com.byku.android.textdrafter.utils.views.ViewSizeCalculatorImpl;
 import com.byku.android.textdrafter.utils.views.ViewsSource;
 import com.byku.android.textdrafter.utils.views.observers.ViewDimensions;
-import com.byku.android.textdrafter.utils.views.observers.ViewMetricsSourceSubject;
+import com.byku.android.textdrafter.utils.views.observers.ViewMetricsSourceSubjectSingleton;
 
-public class MainActivity extends AppCompatActivity implements MainView, ViewsSource{
+import javax.inject.Inject;
+
+public class MainActivity extends AppCompatActivity implements MainView, ViewsSource {
+
+    @Inject ViewMetricsSourceSubjectSingleton viewMetricsSingleton;
+    @Inject SmsTextDbHelper smsTextDbHelper;
 
     private ActivityMainBinding binding;
-    private SmsTextDbHelperImpl smsTextDbHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,17 +56,17 @@ public class MainActivity extends AppCompatActivity implements MainView, ViewsSo
     public void setPagerPage(int pageNumber) {
         try {
             binding.pagerMain.setCurrentItem(pageNumber);
-        } catch(Exception ex){
+        } catch (Exception ex) {
             initPageViewer();
         }
     }
 
     @Override
     public void setRecyclerPage(int pageNumber) {
-        try{
-            ((SmsKeysAdapter)binding.recyclerSmsList.getAdapter()).setCurrentItemTo(pageNumber);
+        try {
+            ((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).setCurrentItemTo(pageNumber);
             binding.recyclerSmsList.smoothScrollToPosition(pageNumber);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             initRecyclerView();
         }
     }
@@ -73,18 +78,18 @@ public class MainActivity extends AppCompatActivity implements MainView, ViewsSo
 
     @Override
     public void setButtonWidth(ViewDimensions viewDimensions) {
-        ViewMetricsSourceSubject.getInstance().setAddKeyDimensions(viewDimensions);
+        viewMetricsSingleton.setAddKeyDimensions(viewDimensions);
     }
 
-    private void initVariables(){
-        smsTextDbHelper = new SmsTextDbHelperImpl(this);
+    private void initVariables() {
+        ((TextDrafterApp) getApplication()).getSingletonComponent().inject(this);
     }
 
     private void initBinding() {
         binding = DataBindingUtil.setContentView(
                 this,
                 R.layout.activity_main);
-        binding.setHandlers(new MainHandler(this));
+        binding.setHandlers(new MainHandler());
     }
 
     private void initBindingVariables() {
@@ -93,23 +98,20 @@ public class MainActivity extends AppCompatActivity implements MainView, ViewsSo
 
     private void initRecyclerView() {
         binding.recyclerSmsList.setAdapter(
-                new SmsKeysAdapterImpl(
-                        smsTextDbHelper,
-                        this,
-                        this));
+                new SmsKeysAdapterImpl(this));
         binding.recyclerSmsList.setLayoutManager(
-                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void initPageViewer() {
         binding.pagerMain.setAdapter(
-                new MainViewPager(
+                new MainViewPagerImpl(
                         getSupportFragmentManager(),
-                        new SmsTextDbHelperImpl(this).readAllKeysFromDb()));
-        binding.pagerMain.addOnPageChangeListener(new MainActivityListner().getOnPageChangeListener(this));
+                        smsTextDbHelper.readAllKeysFromDb()));
+        binding.pagerMain.addOnPageChangeListener(MainActivityListner.getOnPageChangeListener(this));
     }
 
-    private void initRecyclerSizeListeners(){
+    private void initRecyclerSizeListeners() {
         new ViewSizeCalculatorImpl(this).calcViewSize();
     }
 }
