@@ -4,8 +4,20 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 
+import com.byku.android.textdrafter.activities.mainactivity.adapters.models.ContactModel;
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
+import com.byku.android.textdrafter.utils.ContactDbHelper;
 import com.byku.android.textdrafter.utils.parsers.TextParser;
+
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainFragmentListeners {
 
@@ -17,6 +29,7 @@ public class MainFragmentListeners {
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    new ContactDbHelper().getContacts(model.getActivity());
                 }
 
                 @Override
@@ -46,6 +59,31 @@ public class MainFragmentListeners {
         };
     }
 
+    public View.OnFocusChangeListener getFocusChangeListener(final MainFragmentModel model){
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(view.isFocused()){
+                    Observable.fromCallable(new Callable<List<ContactModel>>() {
+                        @Override
+                        public List<ContactModel> call() throws Exception {
+                            return new ContactDbHelper().getContacts(model.getActivity());
+                        }
+                    }).subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnNext(new Consumer<List<ContactModel>>() {
+                                @Override
+                                public void accept(@NonNull List<ContactModel> models) throws Exception {
+
+                                }
+                            })
+                            .subscribe();
+
+                }
+            }
+        };
+    }
+
     public View.OnFocusChangeListener getEditTelTextOnFocusChangeListener(){
         return new View.OnFocusChangeListener() {
             @Override
@@ -54,4 +92,6 @@ public class MainFragmentListeners {
             }
         };
     }
+
+
 }

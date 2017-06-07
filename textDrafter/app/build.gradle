@@ -40,4 +40,8 @@ dependencies {
     compile "com.google.dagger:dagger:+"
     annotationProcessor "com.google.dagger:dagger-compiler:+"
     provided 'javax.annotation:jsr250-api:1.0'
+
+//    RxJava
+    compile 'io.reactivex.rxjava2:rxandroid:+'
+    compile 'io.reactivex.rxjava2:rxjava:+'
 }

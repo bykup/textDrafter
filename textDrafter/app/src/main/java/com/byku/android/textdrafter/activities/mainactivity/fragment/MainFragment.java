@@ -93,6 +93,7 @@ public class MainFragment extends Fragment implements FragmentView{
         binding.edittextTelNumber.addTextChangedListener(
                 mainFragmentListeners.getTextWatcherTelText(
                         mainFragmentModel));
+        binding.edittextTelNumber.setOnFocusChangeListener(mainFragmentListeners.getFocusChangeListener(mainFragmentModel));
         binding.edittextTelNumber.setOnFocusChangeListener(mainFragmentListeners.getEditTelTextOnFocusChangeListener());
     }
 
