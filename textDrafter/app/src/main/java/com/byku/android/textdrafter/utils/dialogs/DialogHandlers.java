@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.byku.android.textdrafter.R;
 import com.byku.android.textdrafter.activities.mainactivity.activity.MainView;
 import com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentModel;
-import com.byku.android.textdrafter.database.SmsTextDbHelperImpl;
+import com.byku.android.textdrafter.database.SmsTextDbHelper;
 
 public class DialogHandlers {
 
@@ -49,7 +49,7 @@ public class DialogHandlers {
             public void onClick(DialogInterface dialogInterface, int id) {
                 if (TextUtils.isEmpty(dialogModel.getSmsText()))
                     return;
-                new SmsTextDbHelperImpl(mainFragmentModel.getActivity()).writeToDatabase(dialogModel.getSmsText(), "", "");
+                new SmsTextDbHelper(mainFragmentModel.getActivity()).writeToDatabase(dialogModel.getSmsText(), "", "");
                 mainFragmentModel.refreshViews();
             }
         };

@@ -2,6 +2,7 @@ package com.byku.android.textdrafter.activities.mainactivity.adapters;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,7 +35,8 @@ public class SmsContactsAdapterImpl extends RecyclerView.Adapter<SmsContactsAdap
 
     @Override
     public SmsContactsAdapterImpl.ContactsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        ContactlistRecyclerItemBinding binding = ContactlistRecyclerItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ContactsHolder(binding.getRoot());
     }
 
     @Override

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="grey_background">#BDBDBD</color>
+    <color name="grey_middle">#E0E0E0</color>
+    <color name="grey_foreground">#EEEEEE</color>
 
     <!--MainActivity-->
     <color name="main_text">#000000</color>

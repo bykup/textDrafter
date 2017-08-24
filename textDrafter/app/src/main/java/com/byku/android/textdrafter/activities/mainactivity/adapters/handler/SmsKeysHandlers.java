@@ -4,9 +4,7 @@ import android.view.View;
 
 public interface SmsKeysHandlers {
 
-    SmsKeysHandlers setCurrentPosition(int position);
-
     View.OnClickListener getOnClickListener();
 
-    View.OnLongClickListener getOnLongClickListener(String smsKey);
+    View.OnLongClickListener getOnLongClickListener();
 }

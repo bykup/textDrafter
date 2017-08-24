@@ -2,6 +2,7 @@ package com.byku.android.textdrafter.activities.mainactivity.fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 
 import com.byku.android.textdrafter.activities.mainactivity.adapters.models.ContactModel;
@@ -22,21 +23,21 @@ import io.reactivex.schedulers.Schedulers;
 public class MainFragmentListeners {
 
     public TextWatcher getTextWatcherTelText(final MainFragmentModel model) {
-      return new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    new ContactDbHelper().getContacts(model.getActivity());
-                }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                new ContactDbHelper().getContacts(model.getActivity());
+            }
 
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    model.setTelText(editable.toString());
-                }
-            };
+            @Override
+            public void afterTextChanged(Editable editable) {
+                model.setTelText(editable.toString());
+            }
+        };
     }
 
     public TextWatcher getTextWatcherSmsText(final MainFragmentModel model, final MainRecycler recycler) {
@@ -59,39 +60,35 @@ public class MainFragmentListeners {
         };
     }
 
-    public View.OnFocusChangeListener getFocusChangeListener(final MainFragmentModel model){
+    public View.OnFocusChangeListener getFocusChangeListener(final FragmentView fragmentView) {
         return new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(view.isFocused()){
+                if (view.isFocused()) {
+                    Log.d("MainFragmentListeners","EditText focused");
                     Observable.fromCallable(new Callable<List<ContactModel>>() {
                         @Override
                         public List<ContactModel> call() throws Exception {
-                            return new ContactDbHelper().getContacts(model.getActivity());
+                            return new ContactDbHelper().getContacts(fragmentView.getActivity());
                         }
-                    }).subscribeOn(Schedulers.io())
+                    })
+                            .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .doOnNext(new Consumer<List<ContactModel>>() {
                                 @Override
                                 public void accept(@NonNull List<ContactModel> models) throws Exception {
-
+                                    fragmentView.onContatsListReady(models);
+                                    fragmentView.setViewVisibility(0,View.VISIBLE);
                                 }
                             })
                             .subscribe();
 
                 }
+                else{
+                    fragmentView.setViewVisibility(0,View.GONE);
+                }
             }
         };
     }
-
-    public View.OnFocusChangeListener getEditTelTextOnFocusChangeListener(){
-        return new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                System.out.println("Focus change: " + b);
-            }
-        };
-    }
-
 
 }

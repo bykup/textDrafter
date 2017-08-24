@@ -11,6 +11,7 @@ public class ContactTelParserImpl implements ContactTelParser{
 
     public ContactTelParserImpl(EditText editText){
         this.textToOperateOn = editText.getText().toString();
+        this.builder = new StringBuilder();
     }
 
     public ContactTelParserImpl(String textToOperateOn){
@@ -21,7 +22,7 @@ public class ContactTelParserImpl implements ContactTelParser{
     @Override
     public ContactTelParser append(String textToAppend){
         builder.append(textToOperateOn);
-        if(textToOperateOn.endsWith(";"))
+        if(TextUtils.isEmpty(textToOperateOn) || textToOperateOn.endsWith(";"))
             builder.append(textToAppend);
         else
             builder.append(";").append(textToAppend);

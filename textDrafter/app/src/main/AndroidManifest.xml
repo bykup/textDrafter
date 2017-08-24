@@ -23,3 +23,11 @@
     </application>
 
 </manifest>
+
+<!--
+1. Dodać dialog przy usuwaniu, dodać dźwięk usuwania, dodać wibracje usuwania, dodać możliwość pomijania dialogu, dodać animacje usuwania.
+2. Dodać odzyskiwanie staniu listy po usunięciu lub dodaniu obiektu.
+3. Przy usuwaniu z adaptera - notifyItemRemoved! W obu adapterach!
+
+
+-->

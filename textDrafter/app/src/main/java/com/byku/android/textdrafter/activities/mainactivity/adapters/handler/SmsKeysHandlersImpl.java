@@ -4,55 +4,45 @@ import android.view.View;
 
 import com.byku.android.textdrafter.activities.mainactivity.activity.MainView;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapter;
-import com.byku.android.textdrafter.database.SmsTextDbHelper;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysHolder;
+import com.byku.android.textdrafter.database.SmsTextDbHelperInterface;
 
 public class SmsKeysHandlersImpl implements SmsKeysHandlers{
 
-    public static int NOT_INITIALIZED_POSITION = -1;
-
     private MainView mainView;
-    private SmsTextDbHelper smsTextDbHelper;
+    private SmsTextDbHelperInterface smsTextDbHelper;
     private SmsKeysAdapter smsKeysAdapter;
+    private SmsKeysHolder smsKeysHolder;
 
-    private int position = NOT_INITIALIZED_POSITION;
+    private String key = "";
 
-    public SmsKeysHandlersImpl(MainView activityWithPageViewer, int positionOfClickedItem, SmsTextDbHelper databaseWithSmsKeys, SmsKeysAdapter smsKeysAdapter){
+    public SmsKeysHandlersImpl(MainView activityWithPageViewer, String key, SmsTextDbHelperInterface databaseWithSmsKeys, SmsKeysAdapter smsKeysAdapter, SmsKeysHolder smsKeysHolder){
         this.mainView = activityWithPageViewer;
-        this.position = positionOfClickedItem;
+        this.key = key;
         this.smsTextDbHelper = databaseWithSmsKeys;
         this.smsKeysAdapter = smsKeysAdapter;
-    }
-
-    @Override
-    public SmsKeysHandlers setCurrentPosition(int position){
-        this.position = position;
-        return this;
+        this.smsKeysHolder = smsKeysHolder;
     }
 
     @Override
     public View.OnClickListener getOnClickListener() throws IllegalArgumentException{
-        if(position == NOT_INITIALIZED_POSITION)
-            throw new IllegalArgumentException("Position not initialized, position = -1");
-
         return new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                smsKeysAdapter.setCurrentItemTo(position);
-                mainView.setPagerPage(position);
+                smsKeysAdapter.setCurrentItemTo(key);
+                mainView.setPagerPage(key);
+                smsKeysHolder.setBindingActive();
             }
         };
     }
 
     @Override
-    public View.OnLongClickListener getOnLongClickListener(final String smsKey) throws IllegalArgumentException{
-        if(position == NOT_INITIALIZED_POSITION)
-            throw new IllegalArgumentException("Position not initialized, position = -1");
-
+    public View.OnLongClickListener getOnLongClickListener() throws IllegalArgumentException{
         return new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View view) {
-                smsTextDbHelper.removeFromDatabase(smsKey);
-                smsKeysAdapter.dataSetChanged();
+                smsTextDbHelper.removeFromDatabase(key);
+                smsKeysAdapter.itemRemoved(key);
                 return true;
             }
         };

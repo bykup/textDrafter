@@ -5,24 +5,27 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/smskey_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_for_buttons"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/smskey_recycler_item_padding_small"
-        android:paddingEnd="@dimen/smskey_recycler_item_padding_normal"
-        android:paddingLeft="@dimen/smskey_recycler_item_padding_normal"
-        android:paddingRight="@dimen/smskey_recycler_item_padding_normal"
-        android:paddingStart="@dimen/smskey_recycler_item_padding_normal"
-        android:paddingTop="@dimen/smskey_recycler_item_padding_small">
+        android:layout_height="match_parent"
+        android:background="@color/grey_middle"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/smskey"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            tools:text="TEST" />
+            android:layout_marginStart="@dimen/smskey_recycler_item_margin"
+            android:layout_marginLeft="@dimen/smskey_recycler_item_margin"
+            android:layout_marginEnd="@dimen/smskey_recycler_item_margin"
+            android:layout_marginRight="@dimen/smskey_recycler_item_margin">
 
+            <TextView
+                android:id="@+id/smskey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                tools:text="TEST" />
+        </ScrollView>
     </LinearLayout>
 
 </layout>

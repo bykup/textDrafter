@@ -1,9 +1,15 @@
 package com.byku.android.textdrafter.activities.mainactivity.adapters;
 
+import java.util.List;
+
 public interface SmsKeysAdapter {
 
-    void setCurrentItemTo(int position);
+    void setList(List<String> smsKeysList);
 
-    void dataSetChanged();
+    void setCurrentItemTo(String key);
+
+    int getKeyPosition(String key);
+
+    void itemRemoved(String key);
 
 }

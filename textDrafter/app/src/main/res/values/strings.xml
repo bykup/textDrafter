@@ -18,4 +18,8 @@
     <!--SHARING-->
     <string name="sharing_send_to">Send to</string>
 
+    <!--FRAGMENT MAIN-->
+    <string name="fragment_maim_sms_text">Write your sms content here. Use [1],[2] to show app that you want to input text there. Use [1+2] if you want to put results of a calculation from position [1] and [2].
+    You can add and subtract.</string>
+
 </resources>

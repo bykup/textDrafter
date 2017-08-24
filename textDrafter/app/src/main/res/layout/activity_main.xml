@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -13,43 +14,64 @@
 
         <variable
             name="dhandlers"
-            type="com.byku.android.textdrafter.utils.dialogs.DialogHandlers"/>
+            type="com.byku.android.textdrafter.utils.dialogs.DialogHandlers" />
 
     </data>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/grey_background"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/imagebutton_new_smskey"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_sms_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:orientation="horizontal" />
-
-        </LinearLayout>
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/grey_foreground"
+            android:elevation="2dp"
+            android:onClick="@{(view) -> handlers.onNewSmsKeyClick(mainview)}"
+            android:padding="10dp"
+            android:src="@drawable/ic_note_add_black_24dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/grey_foreground"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imagebutton_new_smskey" />
 
-        <ImageButton
-            android:id="@+id/imagebutton_new_smskey"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/smskey_recycler_button"
-            android:onClick="@{(view) -> handlers.onNewSmsKeyClick(mainview)}"
-            android:src="@drawable/ic_note_add_black_24dp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_sms_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="5"
+            android:background="@color/grey_foreground"
+            android:elevation="2dp"
+            android:orientation="horizontal"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/imagebutton_new_smskey"
+            app:layout_constraintTop_toTopOf="@+id/imagebutton_new_smskey"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/pager_main" />
 
-    </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
 </layout>

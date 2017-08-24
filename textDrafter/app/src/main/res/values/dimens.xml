@@ -15,4 +15,7 @@
     <dimen name="smskey_recycler_item_padding_normal">20sp</dimen>
     <dimen name="smskey_recycler_item_padding_small">10sp</dimen>
 
+    <!--margins-->
+    <dimen name="smskey_recycler_item_margin">4dp</dimen>
+
 </resources>
