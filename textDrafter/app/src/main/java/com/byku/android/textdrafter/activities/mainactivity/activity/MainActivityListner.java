@@ -1,19 +1,18 @@
 package com.byku.android.textdrafter.activities.mainactivity.activity;
 
 import android.support.v4.view.ViewPager;
-import android.view.ViewTreeObserver;
 
 import javax.inject.Inject;
 
 public class MainActivityListner implements ViewPager.OnPageChangeListener{
 
-    private MainView mainView;
+    private MainViewInterface mainView;
 
     @Inject
     public MainActivityListner() {
     }
 
-    public void attachView(MainView mainView){
+    public void attachView(MainViewInterface mainView){
         this.mainView = mainView;
     }
 

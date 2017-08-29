@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.byku.android.textdrafter.R;
-import com.byku.android.textdrafter.activities.mainactivity.activity.MainView;
+import com.byku.android.textdrafter.activities.mainactivity.activity.MainViewInterface;
 import com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentModel;
 import com.byku.android.textdrafter.database.SmsTextDbHelper;
 
@@ -43,7 +43,7 @@ public class DialogHandlers {
         };
     }
 
-    public DialogInterface.OnClickListener saveNewKey(final MainView mainFragmentModel, final DialogModel dialogModel) {
+    public DialogInterface.OnClickListener saveNewKey(final MainViewInterface mainFragmentModel, final DialogModel dialogModel) {
         return new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {

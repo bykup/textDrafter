@@ -6,7 +6,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 
 import com.byku.android.textdrafter.R;
-import com.byku.android.textdrafter.activities.mainactivity.activity.MainView;
+import com.byku.android.textdrafter.activities.mainactivity.activity.MainViewInterface;
 import com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentModel;
 import com.byku.android.textdrafter.databinding.InputDialogTextBinding;
 
@@ -41,7 +41,7 @@ public class DialogHelper {
         return this;
     }
 
-    public DialogHelper createAddKeyValueEditDialog(MainView mainView) {
+    public DialogHelper createAddKeyValueEditDialog(MainViewInterface mainView) {
         LayoutInflater inflater = mainView.getActivity().getLayoutInflater();
         InputDialogTextBinding inputDialogTextBinding = DataBindingUtil.inflate(inflater, R.layout.input_dialog_text, null, false);
         inputDialogTextBinding.dialogSmstext.setInputType(InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE);

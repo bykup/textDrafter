@@ -10,22 +10,16 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ScrollView
+        <TextView
+            android:id="@+id/smskey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/smskey_recycler_item_margin"
-            android:layout_marginLeft="@dimen/smskey_recycler_item_margin"
-            android:layout_marginEnd="@dimen/smskey_recycler_item_margin"
-            android:layout_marginRight="@dimen/smskey_recycler_item_margin">
-
-            <TextView
-                android:id="@+id/smskey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                tools:text="TEST" />
-        </ScrollView>
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:gravity="center"
+            android:lines="2"
+            android:longClickable="true"
+            tools:text="TEST" />
     </LinearLayout>
 
 </layout>

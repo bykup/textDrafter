@@ -2,6 +2,7 @@ package com.byku.android.textdrafter.database;
 
 
 import com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentModel;
+import com.byku.android.textdrafter.database.Models.KeyValueRecipentModel;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -15,6 +16,8 @@ public interface SmsTextDbHelperInterface {
     String readValueFromDatabase(String key);
 
     String readRecipentFromDatabase(String key);
+
+    List<KeyValueRecipentModel> readAllFullModelsFromDatabase();
 
     List<String> readAllKeysFromDb();
 

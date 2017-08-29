@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.byku.android.textdrafter.activities.TextDrafterApp;
-import com.byku.android.textdrafter.activities.mainactivity.activity.MainView;
+import com.byku.android.textdrafter.activities.mainactivity.activity.MainPresenterInterface;
+import com.byku.android.textdrafter.activities.mainactivity.activity.MainViewInterface;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.handler.SmsKeysHandlers;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.handler.SmsKeysHandlersImpl;
+import com.byku.android.textdrafter.database.Models.KeyValueRecipentModel;
 import com.byku.android.textdrafter.database.SmsTextDbHelperInterface;
 import com.byku.android.textdrafter.databinding.SmskeyRecyclerItemBinding;
 
@@ -20,19 +22,23 @@ public class SmsKeysAdapterImpl extends RecyclerView.Adapter<SmsKeysHolder> impl
     @Inject
     SmsTextDbHelperInterface smsTextDbHelper;
 
-    private List<String> smsKeys;
-    private MainView mainView;
+    private List<KeyValueRecipentModel> smsKeys;
+    private SmsKeysHolder activeHolder;
+    private MainViewInterface mainView;
+    private MainPresenterInterface mainPresenter;
     private String activeKey = "";
 
-    public SmsKeysAdapterImpl(MainView mainView) {
+    public SmsKeysAdapterImpl(MainViewInterface mainView, MainPresenterInterface mainPresenter, List<KeyValueRecipentModel> smsKeys) {
         this.mainView = mainView;
+        this.mainPresenter = mainPresenter;
+        this.smsKeys = smsKeys;
         initInjection();
     }
 
     @Override
     public SmsKeysHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         SmskeyRecyclerItemBinding binding = SmskeyRecyclerItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new SmsKeysHolder(binding.getRoot(), mainView);
+        return new SmsKeysHolder(binding.getRoot(), mainView, this);
     }
 
     @Override
@@ -48,20 +54,21 @@ public class SmsKeysAdapterImpl extends RecyclerView.Adapter<SmsKeysHolder> impl
     }
 
     @Override
-    public void setList(List<String> smsKeysList) {
-        smsKeys = smsKeysList;
-        notifyDataSetChanged();
+    public void setActiveHolderTo(SmsKeysHolder smsKeysHolder) {
+        if (activeHolder != null && activeHolder != smsKeysHolder)
+            activeHolder.setBindingInactive();
+        activeHolder = smsKeysHolder;
     }
 
     @Override
     public void setCurrentItemTo(String key) {
-        int keyIndex = getKeyPosition(key);
+        activeKey = key;
     }
 
     @Override
     public int getKeyPosition(String key) {
         for (int i = 0; i < smsKeys.size(); i++) {
-            if (smsKeys.get(i).equalsIgnoreCase(key))
+            if (smsKeys.get(i).key.equalsIgnoreCase(key))
                 return i;
         }
         return -1;
@@ -71,6 +78,7 @@ public class SmsKeysAdapterImpl extends RecyclerView.Adapter<SmsKeysHolder> impl
     public void itemRemoved(String key) {
         int keyIndex = getKeyPosition(key);
         smsKeys.remove(keyIndex);
+        mainPresenter.removeKey(key);
         notifyItemRemoved(keyIndex);
     }
 
@@ -79,17 +87,17 @@ public class SmsKeysAdapterImpl extends RecyclerView.Adapter<SmsKeysHolder> impl
     }
 
     private void initText(SmsKeysHolder holder, int position) {
-        holder.getBinding().smskey.setText(smsKeys.get(position));
+        holder.setText(smsKeys.get(position).key);
     }
 
     private void initListeners(SmsKeysHolder holder, int position) {
-        SmsKeysHandlers smsKeysHandlers = new SmsKeysHandlersImpl(mainView, smsKeys.get(position), smsTextDbHelper, this, holder);
-        holder.getBinding().smskeyLayout.setOnClickListener(smsKeysHandlers.getOnClickListener());
-        holder.getBinding().smskeyLayout.setOnLongClickListener(smsKeysHandlers.getOnLongClickListener());
+        SmsKeysHandlers smsKeysHandlers = new SmsKeysHandlersImpl(mainView, smsKeys.get(position).key, smsTextDbHelper, this, holder);
+        holder.setOnClickListener(smsKeysHandlers.getOnClickListener());
+        holder.setOnLongClickListener(smsKeysHandlers.getOnLongClickListener());
     }
 
     private void initView(SmsKeysHolder holder, int position) {
-        if (activeKey.equalsIgnoreCase(smsKeys.get(position))) {
+        if (activeKey.equalsIgnoreCase(smsKeys.get(position).key) || (position == 0 && activeKey.isEmpty())) {
             holder.setBindingActive();
         } else {
             holder.setBindingInactive();

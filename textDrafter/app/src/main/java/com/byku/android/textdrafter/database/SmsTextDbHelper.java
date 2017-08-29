@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 
 import com.byku.android.textdrafter.activities.mainactivity.fragment.MainFragmentModel;
+import com.byku.android.textdrafter.database.Models.KeyValueRecipentModel;
 import com.byku.android.textdrafter.database.Tables.SmsTextContract;
 import com.byku.android.textdrafter.database.Tables.SmsTextContract.FeedEntry;
 
@@ -17,10 +18,10 @@ import java.util.NoSuchElementException;
 
 public class SmsTextDbHelper extends SQLiteOpenHelper implements SmsTextDbHelperInterface {
 
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "SmsTextDb.db";
 
-    private static final String SQL_CREATE_ENTRIES = "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" + FeedEntry._ID + " INTEGER PRIMARY KEY," + FeedEntry.COLUMN_NAME_SMSKEY + " TEXT," + FeedEntry.COLUMN_NAME_SMSVALUE + " TEXT, " + FeedEntry.COLUMN_NAME_SMSRECIPENT + " TEXT, UNIQUE (" + FeedEntry.COLUMN_NAME_SMSKEY + ") ON CONFLICT REPLACE)";
+    private static final String SQL_CREATE_ENTRIES = "CREATE TABLE IF NOT EXISTS " + FeedEntry.TABLE_NAME + " (" + FeedEntry._ID + " INTEGER PRIMARY KEY," + FeedEntry.COLUMN_NAME_SMSKEY + " TEXT," + FeedEntry.COLUMN_NAME_SMSVALUE + " TEXT, " + FeedEntry.COLUMN_NAME_SMSRECIPENT + " TEXT, UNIQUE (" + FeedEntry.COLUMN_NAME_SMSKEY + ") ON CONFLICT REPLACE)";
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + FeedEntry.TABLE_NAME;
 
     String[] projectionAll = {
@@ -127,6 +128,29 @@ public class SmsTextDbHelper extends SQLiteOpenHelper implements SmsTextDbHelper
         }
         cursor.close();
         return builder.toString();
+    }
+
+    @Override
+    public List<KeyValueRecipentModel> readAllFullModelsFromDatabase() {
+        List<KeyValueRecipentModel> allModels = new ArrayList<>();
+        Cursor cursor = this.getReadableDatabase().query(
+                FeedEntry.TABLE_NAME,
+                projectionAll,
+                null, null, null, null, null
+        );
+        while (cursor.moveToNext()) {
+            allModels.add(new KeyValueRecipentModel(
+                    cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_SMSKEY)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_SMSVALUE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_SMSRECIPENT))
+            ));
+        }
+        cursor.close();
+        if(allModels.isEmpty()){
+            writeToDatabase(SmsTextContract.TEMP_KEY, "", "");
+            return readAllFullModelsFromDatabase();
+        }
+        return allModels;
     }
 
     @Override

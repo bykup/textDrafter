@@ -4,17 +4,20 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 
 import com.byku.android.textdrafter.R;
 import com.byku.android.textdrafter.activities.TextDrafterApp;
-import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapter;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapterImpl;
 import com.byku.android.textdrafter.activities.mainactivity.managers.SpanningLinearLayoutManager;
+import com.byku.android.textdrafter.database.Models.KeyValueRecipentModel;
 import com.byku.android.textdrafter.databinding.ActivityMainBinding;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity implements MainViewInterface {
 
     @Inject
     MainActivityListner mainActivityListener;
@@ -31,9 +34,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
         initVariables();
         initBinding();
         initBindingVariables();
-        initRecyclerView();
-        initPageViewer();
 //        initRecyclerSizeListeners();
+        mainPresenter.onCreate(this).refresh();
     }
 
     @Override
@@ -45,46 +47,41 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void refreshViews() {
         if (binding == null)
             return;
-        initRecyclerView();
-        initPageViewer();
+        mainPresenter.refresh();
     }
 
     @Override
     public void setPagerPage(String key) {
-        currentKey = key;
-        try {
-            binding.pagerMain.setCurrentItem(((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).getKeyPosition(key));
-        } catch (Exception ex) {
-            initPageViewer();
-        }
+//        currentKey = key;
+//        try {
+//            binding.pagerMain.setCurrentItem(((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).getKeyPosition(key));
+//        } catch (Exception ex) {
+//            initPageViewer();
+//        }
     }
 
     @Override
     public void setRecyclerPage(String key) {
-        try {
-            ((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).setCurrentItemTo(key);
-            binding.recyclerSmsList.smoothScrollToPosition(((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).getKeyPosition(key))
-            ;
-        } catch (Exception ex) {
-            initRecyclerView();
-        }
+//        try {
+//            ((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).setCurrentItemTo(key);
+//            binding.recyclerSmsList.smoothScrollToPosition(((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).getKeyPosition(key));
+//        } catch (Exception ex) {
+//            initRecyclerView();
+//        }
     }
 
-//    @Override
-//    public View getRestrictingView() {
-//        return binding.recyclerSmsList;
-//    }
-//
-//    @Override
-//    public void setButtonWidth(ViewDimensions viewDimensions) {
-//        viewMetricsSingleton.setAddKeyDimensions(viewDimensions);
-//    }
+    @Override
+    public void setItemList(List<KeyValueRecipentModel> keys) {
+        initAdapterAndAttach(keys);
+    }
 
     @Override
     protected void onResume() {
+        super.onResume();
+        if(TextUtils.isEmpty(currentKey))
+            return;
         setPagerPage(currentKey);
         setRecyclerPage(currentKey);
-        super.onResume();
     }
 
 
@@ -104,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
         binding.setMainview(this);
     }
 
-    private void initRecyclerView() {
-        smsKeysAdapter = new SmsKeysAdapterImpl(this);
+    private void initAdapterAndAttach(List<KeyValueRecipentModel> models) {
+        smsKeysAdapter = new SmsKeysAdapterImpl(this, mainPresenter, models);
         binding.recyclerSmsList.setAdapter(smsKeysAdapter);
         binding.recyclerSmsList.setLayoutManager(new SpanningLinearLayoutManager(this, SpanningLinearLayoutManager.HORIZONTAL, false));
     }

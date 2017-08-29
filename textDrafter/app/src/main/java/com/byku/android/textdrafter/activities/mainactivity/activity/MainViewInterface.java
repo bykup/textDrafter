@@ -2,7 +2,11 @@ package com.byku.android.textdrafter.activities.mainactivity.activity;
 
 import android.app.Activity;
 
-public interface MainView {
+import com.byku.android.textdrafter.database.Models.KeyValueRecipentModel;
+
+import java.util.List;
+
+public interface MainViewInterface {
 
     Activity getActivity();
 
@@ -11,4 +15,6 @@ public interface MainView {
     void setPagerPage(String key);
 
     void setRecyclerPage(String key);
+
+    void setItemList(List<KeyValueRecipentModel> keys);
 }

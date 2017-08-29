@@ -6,7 +6,7 @@
 
         <variable
             name="mainview"
-            type="com.byku.android.textdrafter.activities.mainactivity.activity.MainView" />
+            type="com.byku.android.textdrafter.activities.mainactivity.activity.MainViewInterface" />
 
         <variable
             name="handlers"
@@ -62,7 +62,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="0dp"
             android:layout_weight="5"
-            android:background="@color/grey_foreground"
+            android:background="@color/grey_background"
             android:elevation="2dp"
             android:orientation="horizontal"
             app:layout_constraintHorizontal_bias="1.0"
