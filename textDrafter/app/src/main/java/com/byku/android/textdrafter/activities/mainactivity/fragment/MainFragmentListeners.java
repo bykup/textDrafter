@@ -8,15 +8,16 @@ import android.view.View;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.models.ContactModel;
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
 import com.byku.android.textdrafter.utils.ContactDbHelper;
+import com.byku.android.textdrafter.utils.PermissionHelper;
 import com.byku.android.textdrafter.utils.parsers.TextParser;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -30,7 +31,8 @@ public class MainFragmentListeners {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                new ContactDbHelper().getContacts(model.getActivity());
+                if (PermissionHelper.hasContactPermissions(model.getActivity()))
+                    new ContactDbHelper().getContacts(model.getActivity());
             }
 
             @Override
@@ -65,11 +67,13 @@ public class MainFragmentListeners {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (view.isFocused()) {
-                    Log.d("MainFragmentListeners","EditText focused");
+                    Log.d("MainFragmentListeners", "EditText focused");
                     Observable.fromCallable(new Callable<List<ContactModel>>() {
                         @Override
                         public List<ContactModel> call() throws Exception {
-                            return new ContactDbHelper().getContacts(fragmentView.getActivity());
+                            if (PermissionHelper.hasContactPermissions(fragmentView.getActivity()))
+                                return new ContactDbHelper().getContacts(fragmentView.getActivity());
+                            else return new ArrayList<ContactModel>();
                         }
                     })
                             .subscribeOn(Schedulers.io())
@@ -77,15 +81,18 @@ public class MainFragmentListeners {
                             .doOnNext(new Consumer<List<ContactModel>>() {
                                 @Override
                                 public void accept(@NonNull List<ContactModel> models) throws Exception {
-                                    fragmentView.onContatsListReady(models);
-                                    fragmentView.setViewVisibility(0,View.VISIBLE);
+                                    if (models.isEmpty())
+                                        fragmentView.setViewVisibility(0, View.GONE);
+                                    else {
+                                        fragmentView.setViewVisibility(0, View.VISIBLE);
+                                        fragmentView.onContatsListReady(models);
+                                    }
                                 }
                             })
                             .subscribe();
 
-                }
-                else{
-                    fragmentView.setViewVisibility(0,View.GONE);
+                } else {
+                    fragmentView.setViewVisibility(0, View.GONE);
                 }
             }
         };

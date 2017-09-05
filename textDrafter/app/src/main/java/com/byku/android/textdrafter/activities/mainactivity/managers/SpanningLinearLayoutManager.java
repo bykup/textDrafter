@@ -40,12 +40,12 @@ public class SpanningLinearLayoutManager extends LinearLayoutManager {
     }
 
     private RecyclerView.LayoutParams spanLayoutSize(RecyclerView.LayoutParams layoutParams){
-        double itemCount = getItemCount() > 3 ? 3 : getItemCount();
+//        double itemCount = getItemCount() > 3 ? 3 : getItemCount();
         if(getOrientation() == HORIZONTAL){
-            layoutParams.width = (int) Math.round(getHorizontalSpace() / itemCount);
+            layoutParams.width = (int) Math.round(getHorizontalSpace() / 3);
         }
         else if(getOrientation() == VERTICAL){
-            layoutParams.height = (int) Math.round(getVerticalSpace() /  itemCount);
+            layoutParams.height = (int) Math.round(getVerticalSpace() /  3);
         }
         return layoutParams;
     }

@@ -2,13 +2,11 @@
 
 <layout xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/smskey_layout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/grey_middle"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:background="@color/grey_middle">
 
         <TextView
             android:id="@+id/smskey"
@@ -18,8 +16,19 @@
             android:clickable="true"
             android:gravity="center"
             android:lines="2"
+            android:layout_centerInParent="true"
             android:longClickable="true"
             tools:text="TEST" />
-    </LinearLayout>
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/smskey_recycler_item_margin_small"
+            android:layout_marginLeft="@dimen/smskey_recycler_item_margin_small"
+            android:layout_marginRight="@dimen/smskey_recycler_item_margin_small"
+            android:layout_marginEnd="@dimen/smskey_recycler_item_margin_small"
+            android:background="@color/grey_middle"/>
+    </RelativeLayout>
 
 </layout>

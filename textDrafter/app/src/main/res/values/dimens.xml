@@ -17,5 +17,6 @@
 
     <!--margins-->
     <dimen name="smskey_recycler_item_margin">4dp</dimen>
+    <dimen name="smskey_recycler_item_margin_small">6dp</dimen>
 
 </resources>

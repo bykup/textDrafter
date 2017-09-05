@@ -12,30 +12,30 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.byku.android.textdrafter.R;
-import com.byku.android.textdrafter.activities.mainactivity.activity.MainActivityConstants;
+import com.byku.android.textdrafter.activities.mainactivity.activity.MainPresenterInterface;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsContactsAdapterImpl;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.models.ContactModel;
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
-import com.byku.android.textdrafter.database.SmsTextDbHelperInterface;
-import com.byku.android.textdrafter.database.SmsTextDbHelper;
+import com.byku.android.textdrafter.database.Models.KeyValueRecipentModel;
 import com.byku.android.textdrafter.databinding.FragmentMainBinding;
 import com.byku.android.textdrafter.utils.dialogs.DialogHandlers;
 import com.byku.android.textdrafter.utils.dialogs.DialogListeners;
-import com.byku.android.textdrafter.utils.nullobjectpattern.BundleNullSafeguard;
 import com.byku.android.textdrafter.utils.parsers.ContactTelParserImpl;
 
 import java.util.List;
 
-public class MainFragment extends Fragment implements FragmentView{
+public class MainFragment extends Fragment implements FragmentView {
 
+    private KeyValueRecipentModel model;
     private FragmentMainBinding binding;
+    private MainPresenterInterface mainPresenter;
+
     private MainFragmentModel mainFragmentModel;
     private MainFragmentHandler mainFragmentHandler;
     private MainFragmentListeners mainFragmentListeners;
     private MainRecycler mainRecycler;
     private DialogListeners dialogListeners;
     private DialogHandlers dialogHandlers;
-    private SmsTextDbHelperInterface dbHelper;
 
 
     @Override
@@ -50,14 +50,13 @@ public class MainFragment extends Fragment implements FragmentView{
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_main,
                 container, false);
-        initDb();
         initViews();
         return binding.getRoot();
     }
 
     @Override
     public void onContatsListReady(List<ContactModel> models) {
-        SmsContactsAdapterImpl smsContactsAdapter = new SmsContactsAdapterImpl(models,this);
+        SmsContactsAdapterImpl smsContactsAdapter = new SmsContactsAdapterImpl(models, this);
         binding.recyclerContactsList.setLayoutManager(getReverseLinearLayout());
         binding.recyclerContactsList.setAdapter(smsContactsAdapter);
     }
@@ -73,8 +72,14 @@ public class MainFragment extends Fragment implements FragmentView{
         binding.recyclerContactsList.setVisibility(visibility);
     }
 
-    private void initDb(){
-        dbHelper = new SmsTextDbHelper(getActivity());
+    @Override
+    public void setCurrentModel(KeyValueRecipentModel model) {
+        this.model = model;
+    }
+
+    @Override
+    public void setMainPresenter(MainPresenterInterface mainPreseneter) {
+        this.mainPresenter = mainPreseneter;
     }
 
     private void initViews() {
@@ -106,13 +111,9 @@ public class MainFragment extends Fragment implements FragmentView{
     }
 
     private void initMainModelVariables() {
-        BundleNullSafeguard bundle = new BundleNullSafeguard(
-                getArguments(),
-                getActivity());
-        mainFragmentModel.setSmsKey(
-                bundle.getString(MainActivityConstants.SMS_KEYS));
-        mainFragmentModel.setSmsText(dbHelper.readValueFromDatabase(mainFragmentModel.getSmsKey()));
-        mainFragmentModel.setTelText(dbHelper.readRecipentFromDatabase(mainFragmentModel.getSmsKey()));
+        mainFragmentModel.setSmsKey(model.key);
+        mainFragmentModel.setSmsText(model.value);
+        mainFragmentModel.setTelText(model.recipent);
     }
 
     private void mainHandler() {
@@ -125,7 +126,7 @@ public class MainFragment extends Fragment implements FragmentView{
         dialogHandlers = new DialogHandlers();
     }
 
-    private LinearLayoutManager getReverseLinearLayout(){
+    private LinearLayoutManager getReverseLinearLayout() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setReverseLayout(true);
         return linearLayoutManager;

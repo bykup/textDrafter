@@ -1,17 +1,20 @@
 package com.byku.android.textdrafter.activities.mainactivity.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 
 import com.byku.android.textdrafter.R;
 import com.byku.android.textdrafter.activities.TextDrafterApp;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.MainViewPagerAdapterImpl;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapterImpl;
 import com.byku.android.textdrafter.activities.mainactivity.managers.SpanningLinearLayoutManager;
 import com.byku.android.textdrafter.database.Models.KeyValueRecipentModel;
 import com.byku.android.textdrafter.databinding.ActivityMainBinding;
+import com.byku.android.textdrafter.utils.PermissionHelper;
 
 import java.util.List;
 
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
 
     private ActivityMainBinding binding;
     private SmsKeysAdapterImpl smsKeysAdapter;
+    private MainViewPagerAdapterImpl mainViewPager;
     private String currentKey;
 
     @Override
@@ -34,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
         initVariables();
         initBinding();
         initBindingVariables();
-//        initRecyclerSizeListeners();
+        if(!PermissionHelper.hasContactPermissions(this))
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS},0);
         mainPresenter.onCreate(this).refresh();
     }
 
@@ -52,12 +57,12 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
 
     @Override
     public void setPagerPage(String key) {
-//        currentKey = key;
-//        try {
-//            binding.pagerMain.setCurrentItem(((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).getKeyPosition(key));
-//        } catch (Exception ex) {
-//            initPageViewer();
-//        }
+        this.currentKey = key;
+        try {
+            binding.pagerMain.setCurrentItem(smsKeysAdapter.getKeyPosition(key));
+        } catch (NullPointerException ex) {
+            mainPresenter.refresh();
+        }
     }
 
     @Override
@@ -73,15 +78,7 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
     @Override
     public void setItemList(List<KeyValueRecipentModel> keys) {
         initAdapterAndAttach(keys);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(TextUtils.isEmpty(currentKey))
-            return;
-        setPagerPage(currentKey);
-        setRecyclerPage(currentKey);
+        initPageViewer(keys);
     }
 
 
@@ -107,15 +104,10 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
         binding.recyclerSmsList.setLayoutManager(new SpanningLinearLayoutManager(this, SpanningLinearLayoutManager.HORIZONTAL, false));
     }
 
-    private void initPageViewer() {
-//        binding.pagerMain.setAdapter(
-//                new MainViewPagerImpl(
-//                        getSupportFragmentManager(),
-//                        smsTextDbHelper.readAllKeysFromDb()));
-//        binding.pagerMain.addOnPageChangeListener(mainActivityListener);
+    private void initPageViewer(List<KeyValueRecipentModel> models) {
+        mainViewPager = new MainViewPagerAdapterImpl(getSupportFragmentManager(),models, mainPresenter);
+        binding.pagerMain.setAdapter(mainViewPager);
+        binding.pagerMain.addOnPageChangeListener(mainActivityListener);
     }
 
-//    private void initRecyclerSizeListeners() {
-//        new ViewSizeCalculatorImpl(this).calcViewSize();
-//    }
 }
