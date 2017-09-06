@@ -63,8 +63,7 @@ public class MainFragment extends Fragment implements FragmentView {
 
     @Override
     public void setCurrentContact(ContactModel model) {
-        EditText exitText = binding.edittextTelNumber;
-        exitText.setText(new ContactTelParserImpl(exitText).append(model.contactNumber).getOperationResult());
+        binding.edittextTelNumber.setText(new ContactTelParserImpl(binding.edittextTelNumber).append(model.contactNumber).getOperationResult());
     }
 
     @Override
@@ -108,6 +107,8 @@ public class MainFragment extends Fragment implements FragmentView {
                 mainFragmentListeners.getTextWatcherTelText(
                         mainFragmentModel));
         binding.edittextTelNumber.setOnFocusChangeListener(mainFragmentListeners.getFocusChangeListener(this));
+        // TODO: 06.09.2017 delete 
+        binding.temproary.setText(this.model.key);
     }
 
     private void initMainModelVariables() {

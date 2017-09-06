@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.byku.android.textdrafter.R;
 import com.byku.android.textdrafter.activities.TextDrafterApp;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.MainViewPagerAdapterImpl;
+import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapter;
 import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsKeysAdapterImpl;
 import com.byku.android.textdrafter.activities.mainactivity.managers.SpanningLinearLayoutManager;
 import com.byku.android.textdrafter.database.Models.KeyValueRecipentModel;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
     private ActivityMainBinding binding;
     private SmsKeysAdapterImpl smsKeysAdapter;
     private MainViewPagerAdapterImpl mainViewPager;
-    private String currentKey;
+    private String currentKey = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
         initVariables();
         initBinding();
         initBindingVariables();
-        if(!PermissionHelper.hasContactPermissions(this))
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS},0);
+        if (!PermissionHelper.hasContactPermissions(this))
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 0);
         mainPresenter.onCreate(this).refresh();
     }
 
@@ -56,6 +57,13 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
     }
 
     @Override
+    public void initPageViewer(List<KeyValueRecipentModel> models) {
+        mainViewPager = new MainViewPagerAdapterImpl(getSupportFragmentManager(), models, mainPresenter);
+        binding.pagerMain.setAdapter(mainViewPager);
+        binding.pagerMain.addOnPageChangeListener(mainActivityListener);
+    }
+
+    @Override
     public void setPagerPage(String key) {
         this.currentKey = key;
         try {
@@ -66,19 +74,24 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
     }
 
     @Override
-    public void setRecyclerPage(String key) {
-//        try {
-//            ((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).setCurrentItemTo(key);
-//            binding.recyclerSmsList.smoothScrollToPosition(((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).getKeyPosition(key));
-//        } catch (Exception ex) {
-//            initRecyclerView();
-//        }
+    public void setRecyclerPage(int position) {
+        try {
+            ((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).setCurrentItemTo(position);
+            binding.recyclerSmsList.smoothScrollToPosition(position);
+        } catch (Exception ex) {
+            mainPresenter.refresh();
+        }
     }
 
     @Override
     public void setItemList(List<KeyValueRecipentModel> keys) {
         initAdapterAndAttach(keys);
         initPageViewer(keys);
+        // TODO: 06.09.2017 implement notify item inserted! Mandarory!
+        int position =  ((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).getKeyPosition(currentKey);
+        ((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).setCurrentItemTo(position);
+        binding.recyclerSmsList.smoothScrollToPosition(position);
+        setPagerPage(currentKey);
     }
 
 
@@ -102,12 +115,6 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
         smsKeysAdapter = new SmsKeysAdapterImpl(this, mainPresenter, models);
         binding.recyclerSmsList.setAdapter(smsKeysAdapter);
         binding.recyclerSmsList.setLayoutManager(new SpanningLinearLayoutManager(this, SpanningLinearLayoutManager.HORIZONTAL, false));
-    }
-
-    private void initPageViewer(List<KeyValueRecipentModel> models) {
-        mainViewPager = new MainViewPagerAdapterImpl(getSupportFragmentManager(),models, mainPresenter);
-        binding.pagerMain.setAdapter(mainViewPager);
-        binding.pagerMain.addOnPageChangeListener(mainActivityListener);
     }
 
 }

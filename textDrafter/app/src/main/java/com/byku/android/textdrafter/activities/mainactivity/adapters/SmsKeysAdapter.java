@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface SmsKeysAdapter {
 
-    void setActiveHolderTo(SmsKeysHolder smsKeysHolder);
+    void setActiveHolderTo(SmsKeysHolder smsKeysHolder, String key);
 
     void setCurrentItemTo(String key);
+
+    void setCurrentItemTo(int position);
 
     int getKeyPosition(String key);
 

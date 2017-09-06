@@ -29,8 +29,7 @@ public class SmsKeysHolder extends RecyclerView.ViewHolder {
             binding.smskeyLayout.setElevation(2);
         }
 
-        adapter.setActiveHolderTo(this);
-        adapter.setCurrentItemTo(key);
+        adapter.setActiveHolderTo(this, key);
         mainView.setPagerPage(key);
     }
 

@@ -12,9 +12,11 @@ public interface MainViewInterface {
 
     void refreshViews();
 
+    void initPageViewer(List<KeyValueRecipentModel> models);
+
     void setPagerPage(String key);
 
-    void setRecyclerPage(String key);
+    void setRecyclerPage(int position);
 
     void setItemList(List<KeyValueRecipentModel> keys);
 }

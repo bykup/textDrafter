@@ -23,7 +23,7 @@ public class MainActivityListner implements ViewPager.OnPageChangeListener{
 
     @Override
     public void onPageSelected(int position) {
-//        mainView.setRecyclerPage(position);
+        mainView.setRecyclerPage(position);
     }
 
     @Override

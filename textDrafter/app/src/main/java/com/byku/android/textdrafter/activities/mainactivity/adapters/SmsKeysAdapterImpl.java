@@ -54,15 +54,23 @@ public class SmsKeysAdapterImpl extends RecyclerView.Adapter<SmsKeysHolder> impl
     }
 
     @Override
-    public void setActiveHolderTo(SmsKeysHolder smsKeysHolder) {
+    public void setActiveHolderTo(SmsKeysHolder smsKeysHolder, String key) {
         if (activeHolder != null && activeHolder != smsKeysHolder)
             activeHolder.setBindingInactive();
         activeHolder = smsKeysHolder;
+        activeKey = key;
     }
 
     @Override
     public void setCurrentItemTo(String key) {
         activeKey = key;
+        notifyItemChanged(getKeyPosition(key));
+    }
+
+    @Override
+    public void setCurrentItemTo(int position) {
+        activeKey = smsKeys.get(position).key;
+        notifyItemChanged(position);
     }
 
     @Override
@@ -71,15 +79,21 @@ public class SmsKeysAdapterImpl extends RecyclerView.Adapter<SmsKeysHolder> impl
             if (smsKeys.get(i).key.equalsIgnoreCase(key))
                 return i;
         }
-        return -1;
+        return 0;
     }
 
     @Override
     public void itemRemoved(String key) {
         int keyIndex = getKeyPosition(key);
         smsKeys.remove(keyIndex);
-        mainPresenter.removeKey(key);
         notifyItemRemoved(keyIndex);
+        if(activeKey.equalsIgnoreCase(key)) {
+            activeKey = !smsKeys.isEmpty() ? smsKeys.get(0).key : "";
+            setCurrentItemTo(activeKey);
+        }
+        mainView.initPageViewer(smsKeys);
+        mainView.setPagerPage(activeKey);
+        mainPresenter.removeKey(key);
     }
 
     private void initInjection() {

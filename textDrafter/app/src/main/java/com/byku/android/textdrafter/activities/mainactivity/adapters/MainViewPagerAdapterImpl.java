@@ -41,5 +41,9 @@ public class MainViewPagerAdapterImpl extends FragmentStatePagerAdapter {
         return smsTypes.size();
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
 }
 
