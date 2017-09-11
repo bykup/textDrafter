@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.byku.android.textdrafter"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -19,11 +19,6 @@ android {
     }
     dataBinding {
         enabled = true
-    }
-
-    packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/DEPENDENCIES'
     }
 }
 
@@ -50,7 +45,4 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:+'
     compile 'io.reactivex.rxjava2:rxjava:+'
 
-//    pdfbox
-//    compile 'com.tom_roush:pdfbox-android:1.8.9.1'
-    compile 'com.github.dhorions:boxable:1.5-RC'
 }

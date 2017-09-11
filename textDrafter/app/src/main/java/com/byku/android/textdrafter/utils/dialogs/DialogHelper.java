@@ -48,6 +48,7 @@ public class DialogHelper {
         inputDialogTextBinding.dialogSmstext.setLines(1);
         inputDialogTextBinding.setDialogmodel(dialogModel);
         inputDialogTextBinding.dialogSmstext.addTextChangedListener(dialogListener.getTextWatcher(dialogModel));
+        inputDialogTextBinding.dialogSmstext.setHint(R.string.dialog_new_hint);
 
         dialog = new AlertDialog.Builder(mainView.getActivity())
                 .setView(inputDialogTextBinding.getRoot())

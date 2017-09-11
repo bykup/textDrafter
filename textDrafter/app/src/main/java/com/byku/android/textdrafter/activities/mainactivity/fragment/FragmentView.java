@@ -18,8 +18,6 @@ public interface FragmentView {
 
     void setCurrentModel(KeyValueRecipentModel model);
 
-    void setMainPresenter(MainPresenterInterface mainPreseneter);
-
     Activity getActivity();
 
 }

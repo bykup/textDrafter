@@ -12,7 +12,7 @@ public interface MainViewInterface {
 
     void refreshViews();
 
-    void initPageViewer(List<KeyValueRecipentModel> models);
+    void initPageViewer();
 
     void setPagerPage(String key);
 

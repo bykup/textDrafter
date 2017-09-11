@@ -13,24 +13,21 @@ import java.util.List;
 public class MainViewPagerAdapterImpl extends FragmentStatePagerAdapter {
 
     private List<KeyValueRecipentModel> smsTypes;
-    private MainPresenterInterface mainPresenterInterface;
 
 
     public MainViewPagerAdapterImpl(FragmentManager fm) {
         super(fm);
     }
 
-    public MainViewPagerAdapterImpl(FragmentManager fm, List<KeyValueRecipentModel> smsTypes, MainPresenterInterface mainPresenterInterface) {
+    public MainViewPagerAdapterImpl(FragmentManager fm, List<KeyValueRecipentModel> smsTypes) {
         super(fm);
         this.smsTypes = smsTypes;
-        this.mainPresenterInterface = mainPresenterInterface;
     }
 
     @Override
     public Fragment getItem(int position) {
         MainFragment mainFragment = new MainFragment();
         mainFragment.setCurrentModel(smsTypes.get(position));
-        mainFragment.setMainPresenter(mainPresenterInterface);
         return mainFragment;
     }
 

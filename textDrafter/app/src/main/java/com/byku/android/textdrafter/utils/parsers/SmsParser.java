@@ -93,6 +93,6 @@ public class SmsParser {
     }
 
     private String getCalculatedText(String textToCalc){
-        return String.valueOf(String.valueOf(MathParser.eval(textToCalc)));
+        return String.format("%.2f",MathParser.eval(textToCalc));
     }
 }

@@ -7,20 +7,21 @@ import android.databinding.Bindable;
 import android.view.WindowManager;
 
 import com.android.databinding.library.baseAdapters.BR;
+import com.byku.android.textdrafter.database.Models.KeyValueRecipentModel;
 import com.byku.android.textdrafter.database.SmsTextDbHelper;
 import com.byku.android.textdrafter.database.Tables.SmsTextContract;
 
 public class MainFragmentModel extends BaseObservable {
 
     private Activity activity;
+    private KeyValueRecipentModel model;
     private String smsKey;
     private String smsText;
     private String telText;
 
-    public MainFragmentModel(Activity activity) {
+    public MainFragmentModel(Activity activity, KeyValueRecipentModel model) {
         this.activity = activity;
-        setSmsText(new SmsTextDbHelper(activity).readValueFromDatabase(SmsTextContract.TEMP_KEY));
-        setTelText(new SmsTextDbHelper(activity).readRecipentFromDatabase(SmsTextContract.TEMP_KEY));
+        this.model = model;
         initViewsBehaviour();
     }
 
@@ -31,6 +32,7 @@ public class MainFragmentModel extends BaseObservable {
 
     public void setSmsText(String smsText) {
         this.smsText = smsText;
+        model.value = smsText;
         notifyPropertyChanged(BR.smsText);
     }
 
@@ -40,6 +42,7 @@ public class MainFragmentModel extends BaseObservable {
     }
 
     public void setTelText(String telText) {
+        this.model.recipent = telText;
         this.telText = telText;
         notifyPropertyChanged(BR.telText);
     }

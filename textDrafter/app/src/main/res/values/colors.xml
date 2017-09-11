@@ -4,9 +4,9 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="grey_background">#BDBDBD</color>
-    <color name="grey_middle">#E0E0E0</color>
-    <color name="grey_foreground">#EEEEEE</color>
+    <color name="grey_background">#000000</color>
+    <color name="grey_middle">#9e9e9e</color>
+    <color name="grey_foreground">#bdbdbd</color>
 
     <!--MainActivity-->
     <color name="main_text">#000000</color>

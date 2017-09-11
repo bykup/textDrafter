@@ -91,7 +91,7 @@ public class SmsKeysAdapterImpl extends RecyclerView.Adapter<SmsKeysHolder> impl
             activeKey = !smsKeys.isEmpty() ? smsKeys.get(0).key : "";
             setCurrentItemTo(activeKey);
         }
-        mainView.initPageViewer(smsKeys);
+        mainView.initPageViewer();
         mainView.setPagerPage(activeKey);
         mainPresenter.removeKey(key);
     }

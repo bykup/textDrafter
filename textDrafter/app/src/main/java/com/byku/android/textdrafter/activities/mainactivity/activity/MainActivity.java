@@ -17,9 +17,15 @@ import com.byku.android.textdrafter.database.Models.KeyValueRecipentModel;
 import com.byku.android.textdrafter.databinding.ActivityMainBinding;
 import com.byku.android.textdrafter.utils.PermissionHelper;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
+
+// TODO: 11.09.2017 - lock size of activity when keyboard is present - change so it will move up,  
+// TODO: 11.09.2017 - parsing doubles - change to x decimal places - depending on precision of data
+// TODO: 11.09.2017 - not compatibile with multi-window - change it
 
 public class MainActivity extends AppCompatActivity implements MainViewInterface {
 
@@ -32,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
     private SmsKeysAdapterImpl smsKeysAdapter;
     private MainViewPagerAdapterImpl mainViewPager;
     private String currentKey = "";
+    private List<KeyValueRecipentModel> models;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,8 +64,8 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
     }
 
     @Override
-    public void initPageViewer(List<KeyValueRecipentModel> models) {
-        mainViewPager = new MainViewPagerAdapterImpl(getSupportFragmentManager(), models, mainPresenter);
+    public void initPageViewer() {
+        mainViewPager = new MainViewPagerAdapterImpl(getSupportFragmentManager(), models);
         binding.pagerMain.setAdapter(mainViewPager);
         binding.pagerMain.addOnPageChangeListener(mainActivityListener);
     }
@@ -85,12 +92,10 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
 
     @Override
     public void setItemList(List<KeyValueRecipentModel> keys) {
-        initAdapterAndAttach(keys);
-        initPageViewer(keys);
-        // TODO: 06.09.2017 implement notify item inserted! Mandarory!
-        int position =  ((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).getKeyPosition(currentKey);
-        ((SmsKeysAdapter) binding.recyclerSmsList.getAdapter()).setCurrentItemTo(position);
-        binding.recyclerSmsList.smoothScrollToPosition(position);
+        if (smsKeysAdapter == null)
+            initAdapterAndAttach();
+        initListAndNotifyAdapter(keys);
+        initPageViewer();
         setPagerPage(currentKey);
     }
 
@@ -98,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
     private void initVariables() {
         ((TextDrafterApp) getApplication()).getActivityComponent().inject(this);
         mainActivityListener.attachView(this);
+        models = new ArrayList<>();
     }
 
     private void initBinding() {
@@ -111,10 +117,22 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
         binding.setMainview(this);
     }
 
-    private void initAdapterAndAttach(List<KeyValueRecipentModel> models) {
+    private void initAdapterAndAttach() {
         smsKeysAdapter = new SmsKeysAdapterImpl(this, mainPresenter, models);
         binding.recyclerSmsList.setAdapter(smsKeysAdapter);
         binding.recyclerSmsList.setLayoutManager(new SpanningLinearLayoutManager(this, SpanningLinearLayoutManager.HORIZONTAL, false));
+    }
+
+    private void initListAndNotifyAdapter(List<KeyValueRecipentModel> models){
+        Collections.sort(models);
+        int itemsAdded = 0;
+        for (KeyValueRecipentModel model : models) {
+            if (!this.models.contains(model)) {
+                this.models.add(model);
+                itemsAdded++;
+            }
+        }
+        smsKeysAdapter.notifyItemRangeInserted(this.models.size()-itemsAdded,itemsAdded);
     }
 
 }

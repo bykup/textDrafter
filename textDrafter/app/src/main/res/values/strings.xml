@@ -4,6 +4,7 @@
     <!--MAIN ACTIVITY-->
     <string name="button_prepare">PREPARE DRAFT</string>
     <string name="button_send">SEND TEXT</string>
+    <string name="button_save">SAVE</string>
     <string name="common_first_draft">Draft</string>
 
     <!--DIALOG-->
@@ -11,6 +12,11 @@
     <string name="dialog_cancel">CANCEL</string>
     <string name="dialog_send">SEND SMS</string>
     <string name="dialog_share">SHARE</string>
+    <string name="dialog_new_hint">Write your draft title here</string>
+
+    <!--TOAST-->
+    <string name="toast_draft_saved">Draft saved</string>
+
 
     <!--TOAST-->
     <string name="toast_no_sms_send_perm">NEED PERMISSION TO SEND SMS</string>

@@ -17,6 +17,7 @@ import com.byku.android.textdrafter.activities.mainactivity.adapters.SmsContacts
 import com.byku.android.textdrafter.activities.mainactivity.adapters.models.ContactModel;
 import com.byku.android.textdrafter.activities.mainactivity.views.MainRecycler;
 import com.byku.android.textdrafter.database.Models.KeyValueRecipentModel;
+import com.byku.android.textdrafter.database.SmsTextDbHelper;
 import com.byku.android.textdrafter.databinding.FragmentMainBinding;
 import com.byku.android.textdrafter.utils.dialogs.DialogHandlers;
 import com.byku.android.textdrafter.utils.dialogs.DialogListeners;
@@ -28,14 +29,11 @@ public class MainFragment extends Fragment implements FragmentView {
 
     private KeyValueRecipentModel model;
     private FragmentMainBinding binding;
-    private MainPresenterInterface mainPresenter;
 
     private MainFragmentModel mainFragmentModel;
     private MainFragmentHandler mainFragmentHandler;
     private MainFragmentListeners mainFragmentListeners;
     private MainRecycler mainRecycler;
-    private DialogListeners dialogListeners;
-    private DialogHandlers dialogHandlers;
 
 
     @Override
@@ -52,6 +50,14 @@ public class MainFragment extends Fragment implements FragmentView {
                 container, false);
         initViews();
         return binding.getRoot();
+    }
+
+    @Override
+    public void onPause() {
+        new SmsTextDbHelper(getActivity())
+                .writeToDatabase(mainFragmentModel.getSmsKey(), mainFragmentModel.getSmsText(), mainFragmentModel.getTelText())
+                .close();
+        super.onPause();
     }
 
     @Override
@@ -76,21 +82,15 @@ public class MainFragment extends Fragment implements FragmentView {
         this.model = model;
     }
 
-    @Override
-    public void setMainPresenter(MainPresenterInterface mainPreseneter) {
-        this.mainPresenter = mainPreseneter;
-    }
-
     private void initViews() {
         initMainModel();
         initMainModelVariables();
         mainHandler();
-        dialogListeners();
     }
 
     private void initMainModel() {
         mainFragmentModel = new MainFragmentModel(
-                getActivity());
+                getActivity(), model);
         mainFragmentListeners = new MainFragmentListeners();
         mainRecycler = new MainRecycler(
                 mainFragmentModel,
@@ -107,8 +107,6 @@ public class MainFragment extends Fragment implements FragmentView {
                 mainFragmentListeners.getTextWatcherTelText(
                         mainFragmentModel));
         binding.edittextTelNumber.setOnFocusChangeListener(mainFragmentListeners.getFocusChangeListener(this));
-        // TODO: 06.09.2017 delete 
-        binding.temproary.setText(this.model.key);
     }
 
     private void initMainModelVariables() {
@@ -120,11 +118,6 @@ public class MainFragment extends Fragment implements FragmentView {
     private void mainHandler() {
         mainFragmentHandler = new MainFragmentHandler();
         binding.setHandlers(mainFragmentHandler);
-    }
-
-    private void dialogListeners() {
-        dialogListeners = new DialogListeners();
-        dialogHandlers = new DialogHandlers();
     }
 
     private LinearLayoutManager getReverseLinearLayout() {
