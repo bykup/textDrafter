@@ -14,6 +14,7 @@ public class SmsParser {
     private List<RecyclerSmsModel> recyclerSmsModels;
     private List<KeyValueModel> outputModel;
     private String smsText;
+    private int precision = 0;
 
     public SmsParser(MainFragmentModel mainFragmentModel, MainRecycler mainRecycler) {
         if (mainRecycler.getSmsValuesAdapterImpl() != null) {
@@ -32,7 +33,7 @@ public class SmsParser {
         return getFullTextWithCalculations(smsText);
     }
 
-    private String replaceAllSlashes(RecyclerSmsModel recyclerSmsModel){
+    private String replaceAllSlashes(RecyclerSmsModel recyclerSmsModel) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\\[")
                 .append(recyclerSmsModel.getKey())
@@ -80,8 +81,9 @@ public class SmsParser {
                             .append(text.substring(0, index)).append(model.getValue())
                             .append(text.substring(index + model.getKey().length()))
                             .toString();
+                    getMaxPrecision(model.getValue());
                 }
-                if(shouldExit)
+                if (shouldExit)
                     break;
                 else if (noNumberAfter && noNumberBefore)
                     index = text.indexOf(model.getKey(), model.getValue().length());
@@ -92,7 +94,20 @@ public class SmsParser {
         return text;
     }
 
-    private String getCalculatedText(String textToCalc){
-        return String.format("%.2f",MathParser.eval(textToCalc));
+    private String getCalculatedText(String textToCalc) {
+        String stringToReturn = String.format("%." + precision + "f", MathParser.eval(textToCalc));
+        precision = 0;
+        return stringToReturn;
+    }
+
+    private void getMaxPrecision(String value) {
+        int currentPrecision = calcPrecision(value);
+        if (currentPrecision > precision)
+            precision = currentPrecision;
+    }
+
+    private int calcPrecision(String value) {
+        int integerPlaces = value.indexOf('.');
+        return value.length() - integerPlaces - 1;
     }
 }

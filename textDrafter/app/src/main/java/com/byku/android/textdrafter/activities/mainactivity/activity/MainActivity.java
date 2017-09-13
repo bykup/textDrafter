@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
         binding.recyclerSmsList.setLayoutManager(new SpanningLinearLayoutManager(this, SpanningLinearLayoutManager.HORIZONTAL, false));
     }
 
-    private void initListAndNotifyAdapter(List<KeyValueRecipentModel> models){
+    private void initListAndNotifyAdapter(List<KeyValueRecipentModel> models) {
         Collections.sort(models);
         int itemsAdded = 0;
         for (KeyValueRecipentModel model : models) {
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
                 itemsAdded++;
             }
         }
-        smsKeysAdapter.notifyItemRangeInserted(this.models.size()-itemsAdded,itemsAdded);
+        smsKeysAdapter.notifyItemRangeInserted(this.models.size() - itemsAdded, itemsAdded);
     }
 
 }
