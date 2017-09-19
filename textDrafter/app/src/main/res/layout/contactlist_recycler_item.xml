@@ -3,20 +3,21 @@
 <layout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/contact_layout"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/contact_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="1px"
+        android:padding="3dp"
+        android:background="@color/grey_foreground"
         android:gravity="end"
-        android:orientation="vertical"
-        android:background="@color/smskey_recycler_button">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Kowalski Janusz"
-            android:background="@color/colorPrimary"/>
+            tools:text="Kowalski Janusz" />
 
         <TextView
             android:id="@+id/contact_number"

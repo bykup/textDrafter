@@ -26,7 +26,7 @@ public class SmsContactsAdapterImpl extends RecyclerView.Adapter<SmsContactsAdap
     @Override
     public void onBindViewHolder(SmsContactsAdapterImpl.ContactsHolder holder, int position) {
         holder.getBinding().contactName.setText(models.get(position).contactName);
-        holder.getBinding().contactName.setText(models.get(position).contactName);
+        holder.getBinding().contactNumber.setText(models.get(position).contactNumber);
         holder.getBinding().contactLayout.setOnClickListener(
                 ContactHandlers.getOnContactClick(
                         models.get(position),

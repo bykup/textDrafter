@@ -23,9 +23,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-// TODO: 11.09.2017 - lock size of activity when keyboard is present - change so it will move up,  
-// TODO: 11.09.2017 - parsing doubles - change to x decimal places - depending on precision of data
-// TODO: 11.09.2017 - not compatibile with multi-window - change it
+// TODO: 19.09.2017 contact list should be on top
 
 public class MainActivity extends AppCompatActivity implements MainViewInterface {
 

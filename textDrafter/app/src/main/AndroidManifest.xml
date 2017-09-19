@@ -15,8 +15,7 @@
 
 
         <activity
-            android:name=".activities.mainactivity.activity.MainActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:name=".activities.mainactivity.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

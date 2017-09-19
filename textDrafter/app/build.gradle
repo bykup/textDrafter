@@ -45,4 +45,7 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:+'
     compile 'io.reactivex.rxjava2:rxjava:+'
 
+//    keyboard visibility notif
+    compile 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:1.0.1'
+
 }

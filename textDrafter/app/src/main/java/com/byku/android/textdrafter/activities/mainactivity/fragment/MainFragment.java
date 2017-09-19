@@ -23,7 +23,12 @@ import com.byku.android.textdrafter.utils.dialogs.DialogHandlers;
 import com.byku.android.textdrafter.utils.dialogs.DialogListeners;
 import com.byku.android.textdrafter.utils.parsers.ContactTelParserImpl;
 
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
+
 import java.util.List;
+
+import static android.view.View.GONE;
 
 public class MainFragment extends Fragment implements FragmentView {
 

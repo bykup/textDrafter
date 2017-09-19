@@ -7,6 +7,7 @@
     <color name="grey_background">#000000</color>
     <color name="grey_middle">#9e9e9e</color>
     <color name="grey_foreground">#bdbdbd</color>
+    <color name="grey_light">#e0e0e0</color>
 
     <!--MainActivity-->
     <color name="main_text">#000000</color>
